@@ -1,6 +1,7 @@
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import jwtConfig from "../config/jwtConfig.js";
+import RollActHelper from "../helpers/RollActHelper.js"
 
 // funkcija za proveru ispravnosti JWT tokena za postojeci modul ADM.
 export const checkJwt = async (req, res, next) => {
@@ -61,7 +62,7 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
       const objName = req.objName; 
       const userId = req.userId; 
       // Proveru prava korisnika dalje obavlja obicna funkcija
-      if (await proveraDozvola(userId, objName, par1, par2)) {
+      if (await RollActHelper.getRollPermissions(userId, objName, par1, par2)) {
         next();
       } else {
         return res

@@ -1,4 +1,4 @@
-import { getRollPermissions } from "../../helpers/RollAct.js";
+import { getRollPermissions } from "../../helpers/RollActHelper.js";
 import { checkUserPermissions } from "../../helpers/Userpermiss.js";
 
 // funkcija za proveru dozvola korisnika
