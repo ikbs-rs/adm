@@ -1,13 +1,13 @@
-import { getRollPermissions } from "../../helpers/RollActHelper.js";
-import { checkUserPermissions } from "../../helpers/Userpermiss.js";
+import rollAct from "../../helpers/rollActHelper.js";
+import { checkUserPermissions } from "../../helpers/userpermissHelper.js";
 
 // funkcija za proveru dozvola korisnika
-export const proveraDozvola = async (userId, objName, par1, par2) => {
+const proveraDozvola = async (userId, objName, par1, par2) => {
     try {
       let OK = false;
       let role = [];
       // Dohvatam prvo sve role dodeljene toj akciji i tim pravima CRUDX
-      const rollPermission = await getRollPermissions(objName, par1, par2);
+      const rollPermission = await rollAct.getRollPermissions(objName, par1, par2);
       if (rollPermission) {
         OK = true;
         role = rollPermission;
@@ -27,3 +27,7 @@ export const proveraDozvola = async (userId, objName, par1, par2) => {
       throw new Error(`Sistemska greska prilikom provere dozvola -roll: ${error.message}`);
     }
   };
+
+export default {
+  proveraDozvola,
+}

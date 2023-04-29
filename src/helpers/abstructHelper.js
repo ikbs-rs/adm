@@ -8,9 +8,9 @@ const saltRounds = 10
 
 const add = async (objName, objData) => {
   try {
-    if (!objData.id) {
+
+    if (!objData.id || objData.id !== null) {
         objData.id = await uniqueId();
-        console.log("abstuctHelper ----", objData.id)
     }
     // Mozda mi ovo ne treba jer dolazi sa fronta !!!
     if (objName === "adm_user") {

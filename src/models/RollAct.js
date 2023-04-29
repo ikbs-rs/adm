@@ -1,6 +1,7 @@
 import db from "../db/db.js";
 import { uniqueId } from "../middleware/utility.js";
 import abstractModel from "../models/Abstruct.js";
+import abstructHelper from "../helpers/abstructHelper.js";
 
 // funkcija koja vraća slog iz tabele rolepermiss
 // za dati objName i par2
@@ -8,8 +9,8 @@ export const getRolls = async (objName, par1, par2) => {
   try {
     const value = objName;
     const params = [value];
-    // TOD Ovde dodati proveru da li postoji slog akcije ako ne insertovati novi
-    const item = await abstractModel.findIdbyItem('adm_action', 'code', value)
+    // Ovde dodati proveru da li postoji slog akcije ako ne insertovati novi
+    const item = await abstructHelper.getIdByItem('adm_action', 'code', value)
     if (typeof item === "undefined") {
       try {
         const pId = await uniqueId()      
