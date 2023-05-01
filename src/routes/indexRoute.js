@@ -6,7 +6,6 @@ import servicesRoute from './services/servicesRoute.js'
 import { checkJwt, checkPermissions, checkPermissionsEx } from '../security/interceptors.js'
 
 const router = express.Router();
-const midd = 'midd';
 
 //router.use(checkJwt); // provera JWT tokena na svakom zahtevu
 router.use(express.json())
@@ -25,7 +24,7 @@ router.use((req, res, next) => {
   if (req.path.startsWith('/adm/user/sign')) {
     return next();
   }
-  return checkJwt(req, res, next);
+  checkJwt(req, res, next);
 });
 
 router.use('/adm/user/sign', user)

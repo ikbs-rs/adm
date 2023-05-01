@@ -6,30 +6,23 @@ import roll from "./guards/roll.js"
 // funkcija za proveru ispravnosti JWT tokena za postojeci modul ADM.
 export const checkJwt = async (req, res, next) => {
   try {
+    const jwtServer = process.env.JWT_URL;
     const token = req.headers.authorization?.replace("Bearer ", "");
-
-    // izvlačenje identifikatora korisnika iz JWT tokena
-    const decodedToken = jwt.decode(token);
-
-    if (decodedToken && decodedToken.sub) {
-      req.userId = { userId: decodedToken.userId };
-    }
-
-    const remoteUrl = process.env.JWT_URL;
-
-    if (!remoteUrl) {
+    if (!jwtServer) {
       throw new Error(
         "Adresa udaljenog servera nije definisana u .env datoteci."
       );
     } else {
-      if (remoteUrl === "local") {
-        jwt.verify(token, jwtConfig.secret, (err, decoded) => {
+      if (jwtServer === "LOCAL") {
+        jwt.verify(token, jwtConfig.secret, (err, decoded) => {       
           if (err) return res.status(401).json({ error: "Token invalid" });
-          req.userId = decoded.userId;
+          req.userId = decoded.userId
+          req.decodeJwt = decoded
           next();
         });
       } else {
-        const response = await axios.get(`${remoteUrl}`, {
+        const checkJwtUrl = `${jwtServer}/checkJwt`;
+        const res = await axios.post(`${checkJwtUrl}`, {}, {
           headers: { Authorization: `Bearer ${token}` },
           timeout: 5000, // vreme za koje se očekuje odgovor od udaljenog servera (u milisekundama)
         });
@@ -59,8 +52,8 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
   return async (req, res, next) => {
     try {
       // Dohvatam objekat i korisnika i prosledjujem dalje
-      const objName = req.objName; 
-      const userId = req.userId; 
+      const objName = req.objName;
+      const userId = req.userId;
       // Proveru prava korisnika dalje obavlja obicna funkcija
       if (await roll.proveraDozvola(userId, objName, par1, par2)) {
         next();
@@ -80,27 +73,27 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
 };
 
 export const checkPermissionsEx = async (req, res, next) => {
-    try {
-      // Dohvatam objekat i korisnika i prosledjujem dalje
-      const userId = req.body.userId; 
-      const objName = req.body.objName;       
-      const par1  = req.body.par1 || 1; 
-      const par2 = req.body.par2 || 1;       
-      // Proveru prava korisnika dalje obavlja obicna funkcija
-      if (await roll.proveraDozvola(userId, objName, par1, par2)) {
-        return res
-          .status(200)
-          .json({ message: `Imate prava na resurs ${objName}` });
-      } else {
-        return res
-          .status(401)
-          .json({ message: "Nemate pravo pristupa ovom resursu - roll." });
-      }
-    } catch (error) {
-      // u slučaju greške, vraćamo objekat sa informacijama o grešci
-      return res.status(error.response?.status || 500).json({
-        message: error.message || "Internal  Server Error - roll",
-        data: error.response?.data || {},
-      });
+  try {
+    // Dohvatam objekat i korisnika i prosledjujem dalje
+    const userId = req.body.userId;
+    const objName = req.body.objName;
+    const par1 = req.body.par1 || 1;
+    const par2 = req.body.par2 || 1;
+    // Proveru prava korisnika dalje obavlja obicna funkcija
+    if (await roll.proveraDozvola(userId, objName, par1, par2)) {
+      return res
+        .status(200)
+        .json({ allowed: true, message: `Imate prava na resurs ${objName}` });
+    } else {
+      return res
+        .status(401)
+        .json({ message: "Nemate pravo pristupa ovom resursu - roll." });
     }
-  };
+  } catch (error) {
+    // u slučaju greške, vraćamo objekat sa informacijama o grešci
+    return res.status(error.response?.status || 500).json({
+      message: error.message || "Internal  Server Error - roll",
+      data: error.response?.data || {},
+    });
+  }
+};
