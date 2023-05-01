@@ -61,4 +61,34 @@ const getToken = async (userId, userName) => {
   return { "token" : token, "refreshToken" : refreshToken, "userId" : userId, "success" : true };
 };
 
-export { verifyToken, verifyJWT, getToken };
+const decodeJWT = async (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader)
+      return res.status(401).send({ error: "No token provided" });
+
+    const parts = authHeader.split(" ");
+    if (!parts.length === 2)
+      return res.status(401).send({ error: "Token error" });
+
+    const [scheme, token] = parts;
+
+    if (!/^Bearer$/i.test(scheme))
+      return res.status(401).send({ error: "Token malformed" });
+
+    jwt.verify(token, jwtConfig.secret, (err, decoded) => {
+      if (err) return res.status(401).send({ error: "Token invalid" });
+      req.userId = decoded.userId;
+      res.status(200).json({ message: "Data processed successfully", decoded });
+    });
+  } catch (error) {
+    // u slučaju greške, vraćamo objekat sa informacijama o grešci
+    return res.status(error.response?.status || 500).json({
+      message: error.message || "Internal Server Error",
+      data: error.response?.data || {},
+    });
+  }
+};
+
+export { verifyToken, verifyJWT, getToken, decodeJWT };
+

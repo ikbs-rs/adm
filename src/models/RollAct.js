@@ -20,7 +20,7 @@ export const getRolls = async (objName, par1, par2) => {
         console.log(err, `Greška pri dodavanju akcije u tabeli (rollAct): ${err}`)
       }
     } 
-    
+
     let query =
       "SELECT ra.roll FROM adm_rollact ra, adm_action a WHERE ra.action = a.id and a.code=$1";
     if (par1 != 1 && par2 == 1) {
@@ -47,7 +47,7 @@ export const getRolls = async (objName, par1, par2) => {
       query = query;
       params.push(par1, par2);
     }
-
+    
     const { rows } = await db.query(query, params);
     return rows;
   } catch (error) {

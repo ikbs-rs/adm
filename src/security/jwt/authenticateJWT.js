@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import jwtConfig from "../../config/jwtConfig.js";
 
+/*
 const verifyToken = async (req, res, next) => {
   try {
     let token;
@@ -31,7 +32,9 @@ const verifyToken = async (req, res, next) => {
     });
   }
 };
+*/
 
+/*
 const authenticateJWT = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -62,6 +65,7 @@ const authenticateJWT = async (req, res, next) => {
 };
 
 export { verifyToken, authenticateJWT };
+*/
 
 /*
 ********************************* dodavanje dodatnih informacija u payload !!!!! IMPLEMENTIRAO

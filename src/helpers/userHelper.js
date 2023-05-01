@@ -1,6 +1,6 @@
 import abstructHelper from "./abstructHelper.js";
 import userModel from "../models/User.js";
-import { getToken } from "../security/jwt/token.js";
+import { getToken } from "../security/jwt/tokenJWT.js";
 import blacklistTokenModel from "../models/Blacklist_token.js";
 
 const checkUser = async (username, password) => {

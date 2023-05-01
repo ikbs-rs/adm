@@ -1,7 +1,7 @@
 import abstractModel from "../models/Abstruct.js";
 import { uniqueId } from "../middleware/utility.js";
 import abstructQuery from "../middleware/model/abstructQuery.js";
-import { getToken } from "../security/jwt/token.js";
+import { getToken } from "../security/jwt/tokenJWT.js";
 import bcrypt from "bcryptjs";
 
 const saltRounds = 10

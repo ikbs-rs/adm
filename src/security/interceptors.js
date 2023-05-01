@@ -78,3 +78,29 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
     }
   };
 };
+
+export const checkPermissionsEx = async (req, res, next) => {
+    try {
+      // Dohvatam objekat i korisnika i prosledjujem dalje
+      const userId = req.body.userId; 
+      const objName = req.body.objName;       
+      const par1  = req.body.par1 || 1; 
+      const par2 = req.body.par2 || 1;       
+      // Proveru prava korisnika dalje obavlja obicna funkcija
+      if (await roll.proveraDozvola(userId, objName, par1, par2)) {
+        return res
+          .status(200)
+          .json({ message: `Imate prava na resurs ${objName}` });
+      } else {
+        return res
+          .status(401)
+          .json({ message: "Nemate pravo pristupa ovom resursu - roll." });
+      }
+    } catch (error) {
+      // u slučaju greške, vraćamo objekat sa informacijama o grešci
+      return res.status(error.response?.status || 500).json({
+        message: error.message || "Internal  Server Error - roll",
+        data: error.response?.data || {},
+      });
+    }
+  };
