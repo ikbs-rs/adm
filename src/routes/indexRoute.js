@@ -30,6 +30,7 @@ router.use((req, res, next) => {
 
 router.use('/adm/user/sign', user)
 
+// Moze da se svede na jedan ruter ali volim da vidim sta je sve implementirano!!!
 router.use('/adm/action', checkPermissions(), abstruct)
 router.use('/adm/dbmserr', checkPermissions(), abstruct)
 router.use('/adm/dbparameter', checkPermissions(), abstruct)
