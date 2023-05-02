@@ -21,13 +21,13 @@ router.use('/', (req, res, next) => {
 });
 
 router.use((req, res, next) => { 
-  if (req.path.startsWith('/adm/user/sign')) {
+  if (req.path.startsWith('/adm/services/sign')) {
     return next();
   }
   checkJwt(req, res, next);
 });
 
-router.use('/adm/user/sign', user)
+router.use('/adm/services/sign', user)
 
 // Moze da se svede na jedan ruter ali volim da vidim sta je sve implementirano!!!
 router.use('/adm/action', checkPermissions(), abstruct)
