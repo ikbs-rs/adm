@@ -81,6 +81,7 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
 
 export const checkPermissionsEx = async (req, res, next) => {
     try {
+      console.log("ADM inteceptor 84")
       // Dohvatam objekat i korisnika i prosledjujem dalje
       const userId = req.body.userId; 
       const objName = req.body.objName;       
