@@ -49,8 +49,8 @@ const signup = async (objData) => {
 const signin = async (objData) => {
     try {
         const objName = "adm_user";
-        const userId = await abstructHelper.getIdByItem(objName, "username", objData.username);
-        const result = await getToken(userId, objData.username);
+        const userId = await abstructHelper.getIdByItem(objName, "mail", objData.username);
+        const result = await getToken(userId.id, objData.username);
         return result;
     } catch (err) {
         throw new Error(`Greška pri logovanju korisnika uH_singin: ${err.message}`);
