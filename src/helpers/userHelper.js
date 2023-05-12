@@ -27,7 +27,7 @@ const signup = async (objData) => {
         objData.mail
       );
       if (userMail) {
-        throw new Error(`Korisnik sa mejlom ${req.body.mail} postoji!`);
+        throw new Error(`Korisnik sa mejlom ${objData.mail} postoji!`);
       }
       // Provera da li postoji username
       const userId = await abstructHelper.getIdByItem(
@@ -36,7 +36,7 @@ const signup = async (objData) => {
         objData.username
       );
       if (userId) {
-        throw new Error(`Korisnik sa nalogom ${req.body.username} postoji!`);
+        throw new Error(`Korisnik sa nalogom ${objData.username} postoji!`);
       }
       // Add the user
       const result = await abstructHelper.signup(objName, objData);

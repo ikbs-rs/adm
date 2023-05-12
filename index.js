@@ -7,6 +7,13 @@ const app = express()
 dotenv.config()
 app.use(cors())
 
+app.use((req, res, next) => { 
+  // console.log("******************************************************1*****************************************************************")
+  // console.log(req.body)
+  // console.log(req.headers)
+  // console.log("*******************************************************2****************************************************************")
+  next();
+});
 app.use('/',router) // Treba prepraviti '/' route, npr. /ticketlines/api
 
 const appPort = process.env.APP_PORT 
