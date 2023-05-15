@@ -3,15 +3,25 @@
  const getInsertQuery = async (objName, objData) => {
   const insertFields = [];
   const insertValues = [];
+  const entity = entities.entitiesInfo[objName].attributes
 
-  for (const [key, value] of Object.entries(objData)) {
+  for (const key in entity) {
+    const value = objData[key]
     if (value !== null && value !== '' && value !== undefined) {
-      //console.log(`Tip podatka ${key}`, entities.entitiesInfo[objName].attributes[key])
-      const attributeType = entities.entitiesInfo[objName].attributes[key];
+      const attributeType = entity[key];
       insertFields.push(key);
       insertValues.push(attributeType === 'string' ? `'${value}'` : value);
     }
   }
+
+  // for (const [key, value] of Object.entries(objData)) {
+  //   if (value !== null && value !== '' && value !== undefined) {
+  //     //console.log(`Tip podatka ${key}`, entities.entitiesInfo[objName].attributes[key])
+  //     const attributeType = entities.entitiesInfo[objName].attributes[key];
+  //     insertFields.push(key);
+  //     insertValues.push(attributeType === 'string' ? `'${value}'` : value);
+  //   }
+  // }
 
   const fieldsStr = insertFields.join(', ');
   const valuesStr = insertValues.join(', ');
@@ -23,18 +33,28 @@
 
 
 const getUpdateQuery = async (objName, objData) => {
+  const entity = entities.entitiesInfo[objName].attributes
     let updateQuery = `UPDATE ${objName} SET `
-    for (const key in objData) {
+    for (const key in entity) {
       if (objData[key] !== null && key!=="id") {
-        const attributeType = entities.entitiesInfo[objName].attributes[key];
+        const attributeType = entity[key];
         const value = attributeType === 'string' ? `'${objData[key]}'` : objData[key];
         updateQuery += `${key}=${value},`
       } else {
         if (key!=="id") updateQuery += `${key}=NULL,`
       }
     }
+
+    // for (const key in objData) {
+    //   if (objData[key] !== null && key!=="id") {
+    //     const attributeType = entities.entitiesInfo[objName].attributes[key];
+    //     const value = attributeType === 'string' ? `'${objData[key]}'` : objData[key];
+    //     updateQuery += `${key}=${value},`
+    //   } else {
+    //     if (key!=="id") updateQuery += `${key}=NULL,`
+    //   }
+    // }
     updateQuery = updateQuery.slice(0, -1) + ` WHERE id = ${objData.id}`
-    //console.log('abstructQuery', updateQuery)
     return updateQuery
   }
   
