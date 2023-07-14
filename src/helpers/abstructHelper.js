@@ -98,6 +98,36 @@ const getIdByItem = async (objName, item, itemValue) => {
   }
 };
 
+const getAllByItem = async (objName, item, itemValue) => {
+  try {
+    const result = await abstractModel.findAllbyItem(objName, item, itemValue);
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getAllOuterByItem = async (objName, lang, item, itemValue, outer, outerKey) => {
+  try {
+    const result = await abstractModel.findAllOuterByItem(objName, lang, item, itemValue, outer, outerKey);
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getAllOuter1ByItem = async (objName, lang, item, itemValue, outer, outerKey, outer1, outerKey1) => {
+  try {
+    const result = await abstractModel.findAllOuter1ByItem(objName, lang, item, itemValue, outer, outerKey, outer1, outerKey1);
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 const setItem = async (objName, item, items) => {
   try {
     const result = await abstractModel.setItem(objName, item, items);
@@ -136,6 +166,9 @@ export default {
   remove,
   getItem,
   getIdByItem,
+  getAllByItem,
+  getAllOuterByItem,
+  getAllOuter1ByItem,
   setItem,
   signup,
 };

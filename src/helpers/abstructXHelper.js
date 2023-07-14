@@ -1,36 +1,38 @@
-import userpermissModel from "../models/Userpermiss.js";
+import abstractModel from "../models/AbstructX.js";
 import { uniqueId } from "../middleware/utility.js";
 import abstructQuery from "../middleware/model/abstructQuery.js";
 import { getToken } from "../security/jwt/tokenJWT.js";
 import bcrypt from "bcryptjs";
 
-// U petlji vrtim prosledjeni slog i proveravam da li je dodeljen korisniku
-export const checkUserPermissions = async (userId, roles) => {
-    try {
-      for (let i = 0; i < roles.length; i++) {
-        const role = roles[i].roll;
-        const userPermission = await userpermissModel.getUserPermission(userId, role);
-        if (userPermission) {
-          return true; // korisnik ima dozvole za dati set uloga
-        }
-      }
-      return false; // korisnik nema dozvole za dati set uloga
-    } catch (error) {
-      throw new Error(`Greška pri provjeri korisničkih dozvola: ${error.message}`);
-    }
-  };
-
 const saltRounds = 10
 
 const add = async (objName, objData, lang) => {
   try {
+    let objName1 = objName
+    let objData1 = objData
+    let objName2 = `${objName}x`    
+    let objData2 = {}
 
-    if (!objData.id || objData.id !== null) {
-        objData.id = await uniqueId();
+    if (!objData1.id || objData1.id !== null) {
+        objData1.id = await uniqueId();
     }
-    const sqlQuery = await abstructQuery.getInsertQuery(objName, objData);
-    const result = await userpermissModel.add(sqlQuery);
-    return objData.id; //result;
+ 
+    objData2.id = await uniqueId();
+    objData2.site = null
+    objData2.tableid = objData1.id
+    objData2.lang = lang ||'en'
+    objData2.grammcase = 1
+    objData2.text = objData1.text
+
+    // Mozda mi ovo ne treba jer dolazi sa fronta !!!
+    if (objName === "adm_user") {
+      const hashedPassword = await bcrypt.hash(objData.password, saltRounds);
+      objData.password = hashedPassword;
+    }
+    const sqlQuery1 = await abstructQuery.getInsertQuery(objName1, objData1);
+    const sqlQuery2 = await abstructQuery.getInsertQuery(objName2, objData2);
+    const result = await abstractModel.add(sqlQuery1, sqlQuery2);
+    return objData1.id; //result;
   } catch (err) {
     console.log(err);
     throw err;
@@ -39,7 +41,7 @@ const add = async (objName, objData, lang) => {
 
 const getAll = async (objName, lang) => {
   try {  
-    const result = await userpermissModel.find(objName, lang);
+    const result = await abstractModel.find(objName, lang);
     return result;
   } catch (err) {
     console.log(err);
@@ -49,7 +51,7 @@ const getAll = async (objName, lang) => {
 
 const getById = async (objName, lang, id) => {
   try {
-    const result = await userpermissModel.findById(objName, lang, id);
+    const result = await abstractModel.findById(objName, lang, id);
     return result;
   } catch (err) {
     console.log(err);
@@ -59,7 +61,7 @@ const getById = async (objName, lang, id) => {
 
 const getByStext = async (objName, lang, value) => {
   try {
-    const result = await userpermissModel.findByStext(objName, lang, value);
+    const result = await abstractModel.findByStext(objName, lang, value);
     return result;
   } catch (err) {
     console.log(err);
@@ -70,7 +72,7 @@ const getByStext = async (objName, lang, value) => {
 const update = async (objName, objData, lang) => {
   try {
     const sqlQuery = await abstructQuery.getUpdateQueryX(objName, objData);
-    const result = await userpermissModel.update(sqlQuery, objName,  objData, lang);
+    const result = await abstractModel.update(sqlQuery, objName,  objData, lang);
     return result;
   } catch (err) {
     console.log(err);
@@ -80,7 +82,7 @@ const update = async (objName, objData, lang) => {
 
 const remove = async (objName, lang, id) => {
   try {
-    const result = await userpermissModel.remove(objName, lang, id);
+    const result = await abstractModel.remove(objName, lang, id);
     return result;
   } catch (err) {
     console.log(err);
@@ -91,7 +93,7 @@ const remove = async (objName, lang, id) => {
 //******************************* */
 const getItem = async (objName, lang, item, objId) => {
   try {
-    const result = await userpermissModel.findItem(objName, lang, item, objId);
+    const result = await abstractModel.findItem(objName, lang, item, objId);
     return result;
   } catch (err) {
     console.log(err);
@@ -101,7 +103,7 @@ const getItem = async (objName, lang, item, objId) => {
 
 const getIdByItem = async (objName, lang, item, itemValue) => {
   try {
-    const result = await userpermissModel.findIdbyItem(objName, lang, item, itemValue);
+    const result = await abstractModel.findIdbyItem(objName, lang, item, itemValue);
     return result;
   } catch (err) {
     console.log(err);
@@ -111,17 +113,7 @@ const getIdByItem = async (objName, lang, item, itemValue) => {
 
 const getAllByItem = async (objName, lang, item, itemValue) => {
   try {
-    const result = await userpermissModel.findAllbyItem(objName, lang, item, itemValue);
-    return result;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
-
-const getAllOuterByItem = async (objName, lang, item, itemValue, outer) => {
-  try {
-    const result = await userpermissModel.findAllOuterByItem(objName, lang, item, itemValue, outer);
+    const result = await abstractModel.findAllbyItem(objName, lang, item, itemValue);
     return result;
   } catch (err) {
     console.log(err);
@@ -131,7 +123,7 @@ const getAllOuterByItem = async (objName, lang, item, itemValue, outer) => {
 
 const setItem = async (objName, lang, item, items) => {
   try {
-    const result = await userpermissModel.setItem(objName, lang, item, items);
+    const result = await abstractModel.setItem(objName, lang, item, items);
     return result;
   } catch (err) {
     console.log(err);
@@ -168,7 +160,6 @@ export default {
   getItem,
   getIdByItem,
   getAllByItem,
-  getAllOuterByItem,
   setItem,
   signup,
 };

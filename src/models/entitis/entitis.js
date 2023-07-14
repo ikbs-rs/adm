@@ -57,7 +57,7 @@ const entitiesInfo =
         "id": "number",
         "site": "number",
         "code": "string",
-        "name": "string",
+        "text": "string",
         "strukturna": "string",
         "valid": "number"
       }
@@ -158,6 +158,36 @@ const entitiesInfo =
         "site": "number",
         "usr": "number",
         "roll": "number"
+      }
+    },
+    "adm_actionx": {
+      "attributes": {
+        "id": "number",
+        "site": "number",
+        "tableid": "number",
+        "lang": "string",
+        "grammcase": "number",
+        "text": "string"
+      }
+    },
+    "adm_rollx": {
+      "attributes": {
+        "id": "number",
+        "site": "number",
+        "tableid": "number",
+        "lang": "string",
+        "grammcase": "number",
+        "text": "string"
+      }
+    },
+    "adm_usergrpx": {
+      "attributes": {
+        "id": "number",
+        "site": "number",
+        "tableid": "number",
+        "lang": "string",
+        "grammcase": "number",
+        "text": "string"
       }
     }
   }

@@ -4,7 +4,6 @@
   const insertFields = [];
   const insertValues = [];
   const entity = entities.entitiesInfo[objName].attributes
-
   for (const key in entity) {
     const value = objData[key]
     if (value !== null && value !== '' && value !== undefined) {
@@ -57,8 +56,26 @@ const getUpdateQuery = async (objName, objData) => {
     updateQuery = updateQuery.slice(0, -1) + ` WHERE id = ${objData.id}`
     return updateQuery
   }
+
+  const getUpdateQueryX = async (objName, objData) => {
+    const entity = entities.entitiesInfo[objName].attributes
+      let updateQuery = `UPDATE ${objName} SET `
+      for (const key in entity) {
+        if (objData[key] !== null && key!=="id" && key!=="text") {
+          const attributeType = entity[key];
+          const value = attributeType === 'string' ? `'${objData[key]}'` : objData[key];
+          updateQuery += `${key}=${value},`
+        } else {
+          if (key!=="id" && key!=="text") updateQuery += `${key}=NULL,`
+        }
+      }
+  
+      updateQuery = updateQuery.slice(0, -1) + ` WHERE id = ${objData.id}`
+      return updateQuery
+    }  
   
 export default {
   getInsertQuery,
-  getUpdateQuery
+  getUpdateQuery,
+  getUpdateQueryX,
 }

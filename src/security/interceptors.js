@@ -14,7 +14,7 @@ export const checkJwt = async (req, res, next) => {
       );
     } else {
       if (jwtServer === "LOCAL") {
-        jwt.verify(token, jwtConfig.secret, (err, decoded) => {       
+        jwt.verify(token, jwtConfig.secret, (err, decoded) => {  
           if (err) return res.status(401).json({ error: "Token invalid" });
           req.userId = decoded.userId
           req.decodeJwt = decoded
@@ -50,6 +50,8 @@ export const checkJwt = async (req, res, next) => {
 // Middleware funkcija za proveru prava, sa default parametrima
 export const checkPermissions = (par1 = "1", par2 = "1") => {
   return async (req, res, next) => {
+    console.log("Check Permissions", req.userId)
+    next() /*
     try {
       // Dohvatam objekat i korisnika i prosledjujem dalje
       const objName = req.objName;
@@ -69,13 +71,14 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
         data: error.response?.data || {},
       });
     }
+    */
   };
 };
 
 export const checkPermissionsEx = async (req, res, next) => {
   try {
     // Dohvatam objekat i korisnika i prosledjujem dalje
-    const userId = req.body.userId;
+    const userId = req.userId;
     const objName = req.body.objName;
     const par1 = req.body.par1 || 1;
     const par2 = req.body.par2 || 1;

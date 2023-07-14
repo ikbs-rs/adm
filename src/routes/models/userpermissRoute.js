@@ -1,11 +1,11 @@
 import express from "express";
-import abstructController from "../../controllers/abstructController.js";
+import userpermissControlerr from "../../controllers/userpermissControlerr.js";
 import { checkPermissions } from '../../security/interceptors.js'
 
 const router = express.Router();
 
 router.use("/", (req, res, next) => {
-
+    console.log(req.url, "*/*/*/*/*/*/*/*/*")
   const urlParts = req.url.split("/");
   req.objName2 = urlParts[1];
   //console.log("ADM abstructRoute", req.objName2, req.objName2=="services", req.objName2==="services")
@@ -17,20 +17,19 @@ router.use("/", (req, res, next) => {
     if (req.path.startsWith("/_v")) {
       router.use("/_v", abstructRouteV);
     }  else {
-      router.get("/", abstructController.getAll);
-      router.get("/:id", abstructController.getById);
-      router.post("/", checkPermissions("C"), abstructController.add);
-      router.put("/", checkPermissions("U"), abstructController.update);
-      router.delete("/:id", checkPermissions("D"), abstructController.remove);
+      router.get("/", userpermissControlerr.getAll);
+      router.get("/:id", userpermissControlerr.getById);
+      router.post("/", checkPermissions("C"), userpermissControlerr.add);
+      router.put("/", checkPermissions("U"), userpermissControlerr.update);
+      router.delete("/:id", checkPermissions("D"), userpermissControlerr.remove);
 
       req.objItem = urlParts[2];
-      router.get(`/get/${req.objItem}/:id`, abstructController.getItem);
-      router.get(`/getid/${req.objItem}/:value`, abstructController.getIdByItem);
-      router.get(`/getall/${req.objItem}/:value`, abstructController.getAllByItem);
-      router.get(`/getallouter/${req.objItem}/:value`, abstructController.getAllOuterByItem);
-      router.get(`/getallouter1/${req.objItem}/:value`, abstructController.getAllOuter1ByItem);
+      router.get(`/get/${req.objItem}/:id`, userpermissControlerr.getItem);
+      router.get(`/getid/${req.objItem}/:value`, userpermissControlerr.getIdByItem);
+      router.get(`/getall/${req.objItem}/:value`, userpermissControlerr.getAllByItem);
+      router.get(`/getallouter/${req.objItem}/:value`, userpermissControlerr.getAllOuterByItem);
       //Mora se proslediti sledeci json za SETOVANJE *********** {"id": 1627113837566496768, "value": 1} *******    
-      router.put(`/set/${req.objItem}`, checkPermissions("U"), abstructController.setItem);
+      router.put(`/set/${req.objItem}`, checkPermissions("U"), userpermissControlerr.setItem);
   }
   }
   next();
