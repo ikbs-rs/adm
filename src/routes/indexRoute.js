@@ -16,6 +16,7 @@ const router = express.Router();
 //router.use(checkJwt); // provera JWT tokena na svakom zahtevu
 router.use(express.json());
 
+
 router.use("/", (req, res, next) => {
   const urlParts = req.url.split("/");
   // Dohvatam iz URL-a, koju tabelu obradjujen i setuje --- req.objName ****** TABELU

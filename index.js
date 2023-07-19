@@ -8,8 +8,10 @@ dotenv.config()
 app.use(cors())
 
 app.use((req, res, next) => { 
+  //console.log("", req)
   next();
 });
+
 app.use('/',router) // Treba prepraviti '/' route, npr. /ticketlines/api
 
 const appPort = process.env.APP_PORT 

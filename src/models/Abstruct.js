@@ -67,6 +67,7 @@ const findAllbyItem = async (objName, item, itemValue) => {
   const attributeType = entities.entitiesInfo[_objName].attributes[item];
   const value = attributeType === 'string' ? `'${itemValue}'` : itemValue;
   const sqlString = `SELECT * FROM ${objName} WHERE ${item} = ${value}`;
+ 
   const result = await db.query(sqlString);
   const rows = result.rows;
   if (Array.isArray(rows)) {

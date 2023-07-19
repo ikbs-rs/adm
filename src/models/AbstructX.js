@@ -162,7 +162,6 @@ const findAllbyItem = async (objName, lang, item, itemValue) => {
                   ON a.id = b.tableid
                   WHERE b.lang = '${lang||'en'}' 
                   and ${item} = ${value}`;
-
   const result = await db.query(sqlString);
   const rows = result.rows;
   if (Array.isArray(rows)) {
