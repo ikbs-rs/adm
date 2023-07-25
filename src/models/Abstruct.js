@@ -155,6 +155,25 @@ const setItem = async (objName, item, items) => {
   return result.rowCount;
 };
 
+const getAdmParV = async (objName, objId, lang) => {
+  const sqlRecenica =  
+  `select aa.id , aa.site , aa.usr, aa.par, aa.begda, aa.endda, b.code cpar, b.text npar,  b.text textx 
+  from	adm_paruser aa, cmn_parx_v b
+  where	aa.usr = ${objId}     
+  and 	b.lang = '${lang||'en'}'
+  and 	aa.par = b.id`      
+ console.log(sqlRecenica, "****************************/////////")
+  let result = await db.query(sqlRecenica);
+  let rows = result.rows;
+  if (Array.isArray(rows)) {
+    return rows;
+  } else {
+    throw new Error(
+      `Greška pri dohvatanju slogova iz baze - abs find: ${rows}`
+    );
+  }
+};
+
 export default {
   find,
   findById,
@@ -167,4 +186,5 @@ export default {
   findAllOuterByItem,
   findAllOuter1ByItem,
   setItem,
+  getAdmParV,
 };

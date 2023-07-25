@@ -123,6 +123,15 @@ const setItem = async (req, res) => {
   }
 };
 
+const getLista = async (req, res) => {
+  try {
+    const item = await abstructHelper.getLista( req.objName, req.query.stm, req.query.objid, req.query.sl||'en');
+    res.status(200).json({ item }); 
+  } catch (err) {
+    res.status(500).json({ message: `Doslo je do greske getLista Abstruct vController!!! ${req.objName}`, error: err.message });
+  }
+};
+
 export default {
   add,
   getAll,
@@ -136,4 +145,5 @@ export default {
   getAllOuterByItem,
   getAllOuter1ByItem,
   setItem,
+  getLista
 };

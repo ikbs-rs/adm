@@ -157,6 +157,23 @@ const signup = async (objName, objData) => {
   }
 };
 
+const getLista = async (objName, stm, objId, lang) => {
+  try {
+    let result = {};
+    switch (stm) {
+      case "adm_paruser_v":
+        result = await abstractModel.getAdmParV(objName, objId, lang);
+        break;
+      default:
+        console.error("Pogresan naziv za view");
+    }
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 export default {
   add,
   getAll,
@@ -171,4 +188,5 @@ export default {
   getAllOuter1ByItem,
   setItem,
   signup,
+  getLista
 };
