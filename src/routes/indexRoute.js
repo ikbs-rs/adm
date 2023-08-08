@@ -54,6 +54,7 @@ router.use((req, res, next) => {
   router.use("/adm/rollact", checkPermissions(), abstruct);
   router.use("/adm/rolllink", checkPermissions(), abstruct);
   router.use("/adm/rollstr", checkPermissions(), abstruct);
+  router.use("/adm/table", checkPermissions(), abstruct);
   router.use("/adm/user", checkPermissions(), abstruct);
   router.use("/adm/user_v", checkPermissions(), abstruct);
   router.use("/adm/usergrp", checkPermissions(), abstruct);

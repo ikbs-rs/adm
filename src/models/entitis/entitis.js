@@ -95,6 +95,19 @@ const entitiesInfo =
         "obj": "string"
       }
     },
+    "adm_table": {
+      "attributes": {
+        "id": "number",
+        "site": "number",
+        "code": "string",
+        "text": "string",
+        "valid": "number",
+        "module": "string",
+        "base": "string",
+        "url": "string",
+        "dropdown": "number"
+      }
+    },    
     "adm_user": {
       "attributes": {
         "id": "number",
