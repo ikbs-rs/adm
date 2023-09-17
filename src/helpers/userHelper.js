@@ -47,14 +47,17 @@ const signup = async (objData) => {
   };
 
 const signin = async (objData) => {
-    try {
+    // try {
+      console.log("*********************0*****signinH**********************************", objData.username)
         const objName = "adm_user";
         const userId = await abstructHelper.getIdByItem(objName, "mail", objData.username);
+        console.log("*********************1*****signinH**********************************", userId)
         const result = await getToken(userId.id, objData.username);
+        console.log(userId, "********************2******signinH**********************************", result)
         return result;
-    } catch (err) {
-        throw new Error(`Greška pri logovanju korisnika uH_singin: ${err.message}`);
-    }
+    // } catch (err) {
+    //     throw new Error(`Greška pri logovanju korisnika uH_singin: ${err.message}`);
+    // }
 };
 
 const signout = async (authorization) => {

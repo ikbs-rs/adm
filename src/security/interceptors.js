@@ -4,8 +4,9 @@ import jwtConfig from "../config/jwtConfig.js";
 import roll from "./guards/roll.js"
 
 // funkcija za proveru ispravnosti JWT tokena za postojeci modul ADM.
-export const checkJwt = async (req, res, next) => {
+export const checkJwt = async (req, res, next) => {  
   try {
+    console.log('checkJwt====================================')
     const jwtServer = process.env.JWT_URL;
     const token = req.headers.authorization?.replace("Bearer ", "");
     if (!jwtServer) {
@@ -76,8 +77,9 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
 };
 
 export const checkPermissionsEx = async (req, res, next) => {
-  try {
+  //try {
     // Dohvatam objekat i korisnika i prosledjujem dalje
+    console.log("loooooocheckPermissionsEx*-*-*-*-*-*-*-**-*-*!!!!")
     const userId = req.userId;
     const objName = req.body.objName;
     const par1 = req.body.par1 || 1;
@@ -92,11 +94,11 @@ export const checkPermissionsEx = async (req, res, next) => {
         .status(401)
         .json({ message: "Nemate pravo pristupa ovom resursu - roll." });
     }
-  } catch (error) {
-    // u slučaju greške, vraćamo objekat sa informacijama o grešci
-    return res.status(error.response?.status || 500).json({
-      message: error.message || "Internal  Server Error - roll",
-      data: error.response?.data || {},
-    });
-  }
+  // } catch (error) {
+  //   // u slučaju greške, vraćamo objekat sa informacijama o grešci
+  //   return res.status(error.response?.status || 500).json({
+  //     message: error.message || "Internal  Server Error - roll",
+  //     data: error.response?.data || {},
+  //   });
+  // }
 };

@@ -2,6 +2,7 @@ import userHelper from "../helpers/userHelper.js";
 
 const signin = async (req, res) => {
   try {
+    console.log("*************************signin******************************")
     const result = await userHelper.signin(req.body);
     res.status(200).json(result)
   } catch (err) {

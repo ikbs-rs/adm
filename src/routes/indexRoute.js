@@ -18,6 +18,7 @@ router.use(express.json());
 
 
 router.use("/", (req, res, next) => {
+  console.log("///////////////////////@@@//////////////////")
   const urlParts = req.url.split("/");
   // Dohvatam iz URL-a, koju tabelu obradjujen i setuje --- req.objName ****** TABELU
   // Ovde je to .../adm/menu/... adm je modul a menu je tabela
@@ -31,9 +32,11 @@ router.use("/", (req, res, next) => {
 });
 
 router.use((req, res, next) => {
+  console.log(req.path)
   if (req.path.startsWith("/adm/services/sign")) {
     return next();
   }
+  console.log("/////////////////////////////////////////")
   checkJwt(req, res, next);
 });
 
