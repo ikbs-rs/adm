@@ -6,7 +6,7 @@ import roll from "./guards/roll.js"
 // funkcija za proveru ispravnosti JWT tokena za postojeci modul ADM.
 export const checkJwt = async (req, res, next) => {  
   try {
-    console.log('checkJwt====================================')
+    //console.log('checkJwt====================================')
     const jwtServer = process.env.JWT_URL;
     const token = req.headers.authorization?.replace("Bearer ", "");
     if (!jwtServer) {
@@ -52,7 +52,7 @@ export const checkJwt = async (req, res, next) => {
 export const checkPermissions = (par1 = "1", par2 = "1") => {
   return async (req, res, next) => {
     console.log("Check Permissions", req.userId)
-    next() /*
+    //next() 
     try {
       // Dohvatam objekat i korisnika i prosledjujem dalje
       const objName = req.objName;
@@ -72,24 +72,26 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
         data: error.response?.data || {},
       });
     }
-    */
+    
   };
 };
 
 export const checkPermissionsEx = async (req, res, next) => {
   //try {
     // Dohvatam objekat i korisnika i prosledjujem dalje
-    console.log("loooooocheckPermissionsEx*-*-*-*-*-*-*-**-*-*!!!!")
+    console.log(req.userId, "loooooocheckPermissionsEx*-*-*-*-*-*-*-**-*-*!!!!", req.body)
     const userId = req.userId;
     const objName = req.body.objName;
     const par1 = req.body.par1 || 1;
     const par2 = req.body.par2 || 1;
     // Proveru prava korisnika dalje obavlja obicna funkcija
     if (await roll.proveraDozvola(userId, objName, par1, par2)) {
+      console.log("********************89****************")
       return res
         .status(200)
         .json({ allowed: true, message: `Imate prava na resurs ${objName}` });
     } else {
+      console.log("********************94****************")
       return res
         .status(401)
         .json({ message: "Nemate pravo pristupa ovom resursu - roll." });

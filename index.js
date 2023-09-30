@@ -12,7 +12,6 @@ app.use(cors());
 
 dotenv.config()
 app.use((req, res, next) => { 
-  console.log("************ADM!!!!!!**************", req.url)
   next();
 });
 const httpPort = process.env.APP_PORT || 80; // HTTP port
@@ -33,7 +32,6 @@ const credentials = { key: privateKey, cert: certificate };
 });
 
 app.use((req, res, next) => { 
-  console.log("************ADM!!**************", req.url)
   next();
 });
 

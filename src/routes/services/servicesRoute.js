@@ -10,8 +10,8 @@ router.post('/checkPermissions', async (req, res, next) => {
 }); 
 
 router.post('/checkJwt', async (req, res, next) => {
-  console.log("*******checkJwtRout********", { success: true, userId: req.userId, message: "OK", decodeJwt: req.decodeJwt})
-  return res.status(200).json({ success: true, userId: req.userId, message: "OK", decodeJwt: req.decodeJwt});
+  //console.log("*******checkJwtRout********", { success: true, userId: req.decodeJwt.userId, username: req.decodeJwt.username, message: "OK", decodeJwt: req.decodeJwt})
+  return res.status(200).json({ success: true, userId: req.decodeJwt.userId, username: req.decodeJwt.username, message: "OK"});
 }); 
 router.post('/decodeJwt', async (req, res, next) => {
   return decodeJWT(req, res, next);

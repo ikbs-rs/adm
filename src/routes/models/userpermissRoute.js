@@ -5,7 +5,7 @@ import { checkPermissions } from '../../security/interceptors.js'
 const router = express.Router();
 
 router.use("/", (req, res, next) => {
-    console.log(req.url, "*/*/*/*/*/*/*/*/*")
+    //console.log(req.url, "*/*/*/*/*/*/*/*/*")
   const urlParts = req.url.split("/");
   req.objName2 = urlParts[1];
   //console.log("ADM abstructRoute", req.objName2, req.objName2=="services", req.objName2==="services")

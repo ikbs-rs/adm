@@ -2,7 +2,7 @@ import userHelper from "../helpers/userHelper.js";
 
 const signin = async (req, res) => {
   try {
-    console.log("*************************signin******************************")
+    //console.log("*************************signin******************************")
     const result = await userHelper.signin(req.body);
     res.status(200).json(result)
   } catch (err) {
@@ -21,7 +21,8 @@ const signout = async (req, res) => {
 
 const signup = async (req, res) => {
   try {
-    const result = await userHelper.signup(req.body);
+    //console.log("********************userControler.signup************************")
+    const result = await userHelper.signup(req.body, req.query.sl||'en');
     res.status(200).json(result)
   } catch (err) {
     res.status(401).json({ message: err.message });

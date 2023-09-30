@@ -5,8 +5,84 @@ const saltRounds = 10;
 
 //# add function
 const add = async (sqlQuery) => {
+  console.log("************************Abstract.add****************************")
   const result = await db.query(sqlQuery);
   return result.rowCount;
+};
+
+const add2 = async (sqlQuery1, sqlQuery2) => {
+  console.log("************************Abstract.add2****************************")
+  try {
+    await db.query("BEGIN");
+    const result1 = await db.query(sqlQuery1);
+    const rowCount1 = result1.rowCount;
+
+    if (rowCount1 === 0) {
+      throw new Error("Prvi upit nije uspeo");
+    }
+
+    const result2 = await db.query(sqlQuery2);
+    const rowCount2 = result2.rowCount;
+
+    if (rowCount2 === 0) {
+      throw new Error("Drugi upit nije uspeo");
+    }
+
+    await db.query("COMMIT"); // Potvrda transakcije
+
+    
+    return result1.rowCount;
+  } catch (error) {
+    if (db) {
+      await db.query("ROLLBACK"); // Otkazivanje transakcije u slučaju greške
+    }
+    throw error;
+  } 
+
+};
+
+const add4 = async (sqlQuery1, sqlQuery2, sqlQuery3, sqlQuery4) => {
+  console.log("************************Abstract.add3****************************")
+  try {
+    await db.query("BEGIN");
+    const result1 = await db.query(sqlQuery1);
+    const rowCount1 = result1.rowCount;
+
+    if (rowCount1 === 0) {
+      throw new Error("Prvi upit nije uspeo");
+    }
+
+    const result2 = await db.query(sqlQuery2);
+    const rowCount2 = result2.rowCount;
+
+    if (rowCount2 === 0) {
+      throw new Error("Drugi upit nije uspeo");
+    }
+
+    const result3 = await db.query(sqlQuery3);
+    const rowCount3 = result3.rowCount;
+
+    if (rowCount3 === 0) {
+      throw new Error("Treci upit nije uspeo");
+    }
+
+    const result4 = await db.query(sqlQuery4);
+    const rowCount4 = result4.rowCount;
+
+    if (rowCount4 === 0) {
+      throw new Error("Cetvrti upit nije uspeo");
+    }
+    await db.query("COMMIT"); // Potvrda transakcije
+
+    
+    return result1.rowCount;
+  } catch (error) {
+    if (db) {
+      await db.query("ROLLBACK"); // Otkazivanje transakcije u slučaju greške
+    }
+    throw error;
+  } 
+
 };
 
 //# find function
@@ -178,6 +254,8 @@ export default {
   find,
   findById,
   add,
+  add2,
+  add4,
   update,
   remove,
   findItem,

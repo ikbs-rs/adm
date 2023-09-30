@@ -202,6 +202,36 @@ const entitiesInfo =
         "grammcase": "number",
         "text": "string"
       }
+    },
+    "cmn_par": {
+      "attributes": {
+      "id": "number",
+      "site": "number",
+      "code": "string",
+      "tp": "number",
+      "text": "string",
+      "short": "string",
+      "address": "string",
+      "place": "string",
+      "postcode": "string",
+      "tel": "string",
+      "activity": "string",
+      "pib": "string",
+      "idnum": "string",
+      "pdvnum": "string",
+      "begda": "string",
+      "endda": "string"
+      }
+    },
+    "cmn_parx": {
+      "attributes": {
+      "id": "number",
+      "site": "number",
+      "tableid": "number",
+      "lang": "string",
+      "grammcase": "number",
+      "text": "string"
+      }
     }
   }
 export default {

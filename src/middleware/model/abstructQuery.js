@@ -1,6 +1,7 @@
  import entities from "../../models/entitis/entitis.js";
  
  const getInsertQuery = async (objName, objData) => {
+  console.log("**0**********************getInsertQuery****************************")
   const insertFields = [];
   const insertValues = [];
   const entity = entities.entitiesInfo[objName].attributes

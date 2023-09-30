@@ -17,8 +17,9 @@ const checkUser = async (username, password) => {
   return user;
 };
 
-const signup = async (objData) => {
+const signup = async (objData, lang) => {
     try {
+      console.log("**0******************userHelper.Signup************************")
       const objName = "adm_user";
       // Provera da li postoji mail
       const userMail = await abstructHelper.getIdByItem(
@@ -26,9 +27,12 @@ const signup = async (objData) => {
         "mail",
         objData.mail
       );
+      console.log("**1******************userHelper.Signup************************", userMail)
       if (userMail) {
+        console.log("**1.1******************userHelper.Signup************************", userMail)
         throw new Error(`Korisnik sa mejlom ${objData.mail} postoji!`);
       }
+
       // Provera da li postoji username
       const userId = await abstructHelper.getIdByItem(
         objName,
@@ -39,7 +43,8 @@ const signup = async (objData) => {
         throw new Error(`Korisnik sa nalogom ${objData.username} postoji!`);
       }
       // Add the user
-      const result = await abstructHelper.signup(objName, objData);
+      console.log("**2************************userHelper.Signup**********************************", objData.username)
+      const result = await abstructHelper.signup(objName, objData, lang);
       return result;
     } catch (err) {
       throw new Error(`Greška pri registraciji korisnika uH_singup: ${err.message}`);

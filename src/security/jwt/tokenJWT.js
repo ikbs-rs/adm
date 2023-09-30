@@ -62,6 +62,7 @@ const getToken = async (userId, userName) => {
 };
 
 const decodeJWT = async (req, res, next) => {
+  console.log("*******************decodeJWT*********************")
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader)
@@ -79,7 +80,9 @@ const decodeJWT = async (req, res, next) => {
     jwt.verify(token, jwtConfig.secret, (err, decoded) => {
       if (err) return res.status(401).send({ error: "Token invalid" });
       req.userId = decoded.userId;
-      res.status(200).json({ message: "Data processed successfully", decoded });
+      const resObj = {"userId": `${decoded.userId}`, "username": `${decoded.username}`}
+      console.log(resObj, "*******************resObj*********************")
+      res.status(200).json({ message: "Data processed successfully", resObj });
     });
   } catch (error) {
     // u slučaju greške, vraćamo objekat sa informacijama o grešci

@@ -18,7 +18,7 @@ router.use(express.json());
 
 
 router.use("/", (req, res, next) => {
-  console.log("///////////////////////@@@//////////////////")
+  //console.log("///////////////////////@@@//////////////////")
   const urlParts = req.url.split("/");
   // Dohvatam iz URL-a, koju tabelu obradjujen i setuje --- req.objName ****** TABELU
   // Ovde je to .../adm/menu/... adm je modul a menu je tabela
@@ -31,13 +31,17 @@ router.use("/", (req, res, next) => {
   next();
 });
 
-router.use((req, res, next) => {
-  console.log(req.path)
+router.use(async (req, res, next) => {
   if (req.path.startsWith("/adm/services/sign")) {
     return next();
   }
-  console.log("/////////////////////////////////////////")
-  checkJwt(req, res, next);
+  try {
+    await checkJwt(req, res, next);
+    // Ovde možete nastaviti sa izvršavanjem koda nakon što je checkJwt završen
+  } catch (error) {
+    // Obrada grešaka koje se desila u checkJwt
+    res.status(401).json({ error: "Unauthorized" });
+  }
 });
 
   router.use("/adm/x/action", checkPermissions(), abstructX);
@@ -58,7 +62,7 @@ router.use((req, res, next) => {
   router.use("/adm/rolllink", checkPermissions(), abstruct);
   router.use("/adm/rollstr", checkPermissions(), abstruct);
   router.use("/adm/table", checkPermissions(), abstruct);
-  router.use("/adm/user", checkPermissions(), abstruct);
+  router.use("/adm/user", checkPermissions(), user);
   router.use("/adm/user_v", checkPermissions(), abstruct);
   router.use("/adm/usergrp", checkPermissions(), abstruct);
   router.use("/adm/userlink", checkPermissions(), abstruct);
