@@ -64,6 +64,7 @@ router.use(async (req, res, next) => {
   router.use("/adm/table", checkPermissions(), abstruct);
   router.use("/adm/user", checkPermissions(), user);
   router.use("/adm/user_v", checkPermissions(), abstruct);
+  router.use("/adm/userf", checkPermissions(), abstruct);
   router.use("/adm/usergrp", checkPermissions(), abstruct);
   router.use("/adm/userlink", checkPermissions(), abstruct);
   router.use("/adm/userlinkpremiss", checkPermissions(), abstruct);
