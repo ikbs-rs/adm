@@ -250,6 +250,24 @@ const getAdmParV = async (objName, objId, lang) => {
   }
 };
 
+const getAdmUserEventDDV = async (objName, objId, lang) => {
+  const sqlRecenica =  
+  `
+  select id, username code, firstname||' '||coalesce(lastname, '.') text, firstname||' '||coalesce(lastname, '.') textx 
+  from adm_user u
+  `      
+ console.log(sqlRecenica, "****************************/////////")
+  let result = await db.query(sqlRecenica);
+  let rows = result.rows;
+  if (Array.isArray(rows)) {
+    return rows;
+  } else {
+    throw new Error(
+      `Greška pri dohvatanju slogova iz baze - abs find: ${rows}`
+    );
+  }
+};
+
 export default {
   find,
   findById,
@@ -265,4 +283,5 @@ export default {
   findAllOuter1ByItem,
   setItem,
   getAdmParV,
+  getAdmUserEventDDV,
 };

@@ -215,6 +215,9 @@ const getLista = async (objName, stm, objId, lang) => {
       case "adm_paruser_v":
         result = await abstractModel.getAdmParV(objName, objId, lang);
         break;
+        case "adm_usereventdd_v":
+          result = await abstractModel.getAdmUserEventDDV(objName, lang);
+          break;        
       default:
         console.error("Pogresan naziv za view");
     }
