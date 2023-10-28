@@ -20,15 +20,15 @@ router.use("/", (req, res, next) => {
     } else {
       router.get("/", abstructController.getAll);
       router.get("/:id", abstructController.getById);
-      router.post("/", checkPermissions("C"), abstructController.add);
-      router.put("/", checkPermissions("U"), abstructController.update);
-      router.delete("/:id", checkPermissions("D"), abstructController.remove);
+      router.post("/", checkPermissions("CREATE"), abstructController.add);
+      router.put("/", checkPermissions("UPDATE"), abstructController.update);
+      router.delete("/:id", checkPermissions("DELETE"), abstructController.remove);
 
       req.objItem = urlParts[2];
       router.get(`/get/${req.objItem}/:id`, abstructController.getItem);
       router.get(`/getid/${req.objItem}/:value`, abstructController.getIdByItem);
       router.get(`/getall/${req.objItem}/:value`, abstructController.getAllByItem);
-      router.put(`/set/${req.objItem}`, checkPermissions("U"), abstructController.setItem);
+      router.put(`/set/${req.objItem}`, checkPermissions("UPDATE"), abstructController.setItem);
     }
   }
 

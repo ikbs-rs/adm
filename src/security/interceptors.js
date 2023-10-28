@@ -51,8 +51,7 @@ export const checkJwt = async (req, res, next) => {
 // Middleware funkcija za proveru prava, sa default parametrima
 export const checkPermissions = (par1 = "1", par2 = "1") => {
   return async (req, res, next) => {
-    console.log("Check Permissions", req.userId)
-    //next() 
+    //console.log("Check Permissions", req.userId)
     try {
       // Dohvatam objekat i korisnika i prosledjujem dalje
       const objName = req.objName;
@@ -79,19 +78,19 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
 export const checkPermissionsEx = async (req, res, next) => {
   //try {
     // Dohvatam objekat i korisnika i prosledjujem dalje
-    console.log(req.userId, "loooooocheckPermissionsEx*-*-*-*-*-*-*-**-*-*!!!!", req.body)
+    //console.log(req.userId, "loooooocheckPermissionsEx*-*-*-*-*-*-*-**-*-*!!!!", req.body)
     const userId = req.userId;
     const objName = req.body.objName;
     const par1 = req.body.par1 || 1;
     const par2 = req.body.par2 || 1;
     // Proveru prava korisnika dalje obavlja obicna funkcija
     if (await roll.proveraDozvola(userId, objName, par1, par2)) {
-      console.log("********************89****************")
+      //console.log("********************89****************")
       return res
         .status(200)
         .json({ allowed: true, message: `Imate prava na resurs ${objName}` });
     } else {
-      console.log("********************94****************")
+      //console.log("********************94****************")
       return res
         .status(401)
         .json({ message: "Nemate pravo pristupa ovom resursu - roll." });

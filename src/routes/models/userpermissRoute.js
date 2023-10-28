@@ -19,9 +19,9 @@ router.use("/", (req, res, next) => {
     }  else {
       router.get("/", userpermissControlerr.getAll);
       router.get("/:id", userpermissControlerr.getById);
-      router.post("/", checkPermissions("C"), userpermissControlerr.add);
-      router.put("/", checkPermissions("U"), userpermissControlerr.update);
-      router.delete("/:id", checkPermissions("D"), userpermissControlerr.remove);
+      router.post("/", checkPermissions("CREATE"), userpermissControlerr.add);
+      router.put("/", checkPermissions("UPDATE"), userpermissControlerr.update);
+      router.delete("/:id", checkPermissions("DELETE"), userpermissControlerr.remove);
 
       req.objItem = urlParts[2];
       router.get(`/get/${req.objItem}/:id`, userpermissControlerr.getItem);
@@ -29,7 +29,7 @@ router.use("/", (req, res, next) => {
       router.get(`/getall/${req.objItem}/:value`, userpermissControlerr.getAllByItem);
       router.get(`/getallouter/${req.objItem}/:value`, userpermissControlerr.getAllOuterByItem);
       //Mora se proslediti sledeci json za SETOVANJE *********** {"id": 1627113837566496768, "value": 1} *******    
-      router.put(`/set/${req.objItem}`, checkPermissions("U"), userpermissControlerr.setItem);
+      router.put(`/set/${req.objItem}`, checkPermissions("UPDATE"), userpermissControlerr.setItem);
   }
   }
   next();

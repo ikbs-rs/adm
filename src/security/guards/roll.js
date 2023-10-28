@@ -8,9 +8,11 @@ const proveraDozvola = async (userId, objName, par1, par2, callback) => {
       let OK = false;
       let role = [];
 
+      const action = await rollAct.checkAction(objName);
+
       // Postoji samo jedan admin user za koga se ne proveravaju prava, on sluzi za inicijalizaciju
       const admin = await abstructHelper.getItem('adm_user', 'admin', userId)
-      if (admin.admin==1) return true
+      if (admin.admin==1) return true      
       
       // Dohvatam prvo sve role dodeljene toj akciji i tim pravima CRUDX
       const rollPermission = await rollAct.getRollPermissions(objName, par1, par2);
@@ -18,6 +20,7 @@ const proveraDozvola = async (userId, objName, par1, par2, callback) => {
         OK = true;
         role = rollPermission;
       }
+
       if (OK) {
         // Ako postoji rola onda se proverava da li je data trenutnom korisniku
         const userPermission = await checkUserPermissions(userId, role);

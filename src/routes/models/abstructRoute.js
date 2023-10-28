@@ -23,9 +23,9 @@ router.use("/", (req, res, next) => {
     }  else {
       router.get("/", abstructController.getAll);
       router.get("/:id", abstructController.getById);
-      router.post("/", checkPermissions("C"), abstructController.add);
-      router.put("/", checkPermissions("U"), abstructController.update);
-      router.delete("/:id", checkPermissions("D"), abstructController.remove);
+      router.post("/", checkPermissions("CREATE"), abstructController.add);
+      router.put("/", checkPermissions("UPDATE"), abstructController.update);
+      router.delete("/:id", checkPermissions("DELETE"), abstructController.remove);
 
       req.objItem = urlParts[2];
       router.get(`/get/${req.objItem}/:id`, abstructController.getItem);
@@ -34,7 +34,7 @@ router.use("/", (req, res, next) => {
       router.get(`/getallouter/${req.objItem}/:value`, abstructController.getAllOuterByItem);
       router.get(`/getallouter1/${req.objItem}/:value`, abstructController.getAllOuter1ByItem);
       //Mora se proslediti sledeci json za SETOVANJE *********** {"id": 1627113837566496768, "value": 1} *******    
-      router.put(`/set/${req.objItem}`, checkPermissions("U"), abstructController.setItem);
+      router.put(`/set/${req.objItem}`, checkPermissions("UPDATE"), abstructController.setItem);
   }
   }
   next();

@@ -10,31 +10,31 @@ export const getRolls = async (objName, par1, par2) => {
     const value = objName;
     const params = [value];
     // Ovde dodati proveru da li postoji slog akcije ako ne insertovati novi
-    const item = await abstructHelper.getIdByItem('adm_action', 'code', value)
-    if (typeof item === "undefined") {
-      try {
-        const pId = await uniqueId()      
-        let sqlQuery = `insert into adm_action values (${pId}, null, '${value}', '${value}', 1  )`
-        const result = await abstractModel.add(sqlQuery)
-      } catch (err) {
-        console.log(err, `Greška pri dodavanju akcije u tabeli (rollAct): ${err}`)
-      }
-    } 
+    // const item = await abstructHelper.getIdByItem('adm_action', 'code', value)
+    // if (typeof item === "undefined") {
+    //   try {
+    //     const pId = await uniqueId()      
+    //     let sqlQuery = `insert into adm_action values (${pId}, null, '${value}', '${value}', 1  )`
+    //     const result = await abstractModel.add(sqlQuery)
+    //   } catch (err) {
+    //     console.log(err, `Greška pri dodavanju akcije u tabeli (rollAct): ${err}`)
+    //   }
+    // } 
 
-    let query =
+    let query = 
       "SELECT ra.roll FROM adm_rollact ra, adm_action a WHERE ra.action = a.id and a.code=$1";
     if (par1 != 1 && par2 == 1) {
       switch (par1) {
-        case "C":
+        case "CREATE":
           query = query + " and ra.cre_action = 1";
           break;
-        case "U":
+        case "UPDATE":
           query = query + " and ra.upd_action = 1";
           break;
-        case "D":
+        case "DELETE":
           query = query + " and ra.del_action = 1";
           break;
-        case "X":
+        case "EXECUTE":
           query = query + " and ra.del_action = 1";
           break;
       }
@@ -47,9 +47,33 @@ export const getRolls = async (objName, par1, par2) => {
       query = query;
       params.push(par1, par2);
     }
-    
+    console.log(query, "*********************getRolls************************", params)
     const { rows } = await db.query(query, params);
     return rows;
+  } catch (error) {
+    throw new Error(
+      `Greška pri dohvatanju sloga iz baze (rollAct): ${error.message}`
+    );
+  }
+};
+
+export const checkActions = async (objName) => {
+  try {
+    const value = objName;
+    const params = [value];
+    // Ovde dodati proveru da li postoji slog akcije ako ne insertovati novi
+    const item = await abstructHelper.getIdByItem('adm_action', 'code', value)
+    if (typeof item === "undefined") {
+      try {
+        const pId = await uniqueId()      
+        let sqlQuery = `insert into adm_action values (${pId}, null, '${value}', '${value}', 1  )`
+        const result = await abstractModel.add(sqlQuery)
+      } catch (err) {
+        console.log(err, `Greška pri dodavanju akcije u tabeli (rollAct): ${err}`)
+      }
+    } 
+
+    return true;
   } catch (error) {
     throw new Error(
       `Greška pri dohvatanju sloga iz baze (rollAct): ${error.message}`
