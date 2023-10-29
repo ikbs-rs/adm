@@ -124,6 +124,7 @@ const remove = async (objName, id) => {
 //# find Item by id function
 const findItem = async (objName, item, id) => {
   const sqlString = `SELECT ${item} FROM ${objName} WHERE id = ${id}`;
+  console.log("Abstruct.findItem=============================================03.1.1**", sqlString)
   const result = await db.query(sqlString);
   return result.rows[0];
 };

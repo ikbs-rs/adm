@@ -19,7 +19,7 @@ const checkUser = async (username, password) => {
 
 const signup = async (objData, lang) => {
     try {
-      console.log("**0******************userHelper.Signup************************")
+      console.log("**0******************userHelper.Signup************************", objData)
       const objName = "adm_user";
       // Provera da li postoji mail
       const userMail = await abstructHelper.getIdByItem(

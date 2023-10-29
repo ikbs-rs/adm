@@ -9,7 +9,9 @@ const getUserPermission = async (userId, role) => {
   try {
     const query = 'SELECT * FROM adm_userpermiss WHERE usr=$1 AND roll=$2';
     const params = [userId, role];
+    
     const { rows } = await db.query(query, params);
+    console.log("Userpermiss.getUserPermission=======================================*****03.3.1***", query, params, role, rows)
     return rows[0];
   } catch (error) {
     throw new Error(`Greška pri dohvatanju sloga iz baze: ${error.message}`);

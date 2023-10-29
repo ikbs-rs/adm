@@ -1,12 +1,13 @@
 import userpermissModel from "../models/Userpermiss.js";
 import { uniqueId } from "../middleware/utility.js";
 import abstructQuery from "../middleware/model/abstructQuery.js";
-import { getToken } from "../security/jwt/tokenJWT.js";
+//import { getToken } from "../security/jwt/tokenJWT.js";
 import bcrypt from "bcryptjs";
 
 // U petlji vrtim prosledjeni slog i proveravam da li je dodeljen korisniku
 export const checkUserPermissions = async (userId, roles) => {
     try {
+      console.log("UserpermissHelper.checkUserPermissions=======================================*****03.3.0**", roles, roles.length)
       for (let i = 0; i < roles.length; i++) {
         const role = roles[i].roll;
         const userPermission = await userpermissModel.getUserPermission(userId, role);
@@ -141,22 +142,22 @@ const setItem = async (objName, lang, item, items) => {
 
 //************************** */
 
-const signup = async (objName, objData) => {
-  try {
-    objData.id = await uniqueId();
-    const token = await getToken(objData.id, objData.username)
-    const item = {
-      id: objData.id,
-      username: objData.username,
-      token: token,
-    };
-    const user = await add(objName, objData);
-    return item;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
+// const signup = async (objName, objData) => {
+//   try {
+//     objData.id = await uniqueId();
+//     const token = await getToken(objData.id, objData.username)
+//     const item = {
+//       id: objData.id,
+//       username: objData.username,
+//       token: token,
+//     };
+//     const user = await add(objName, objData);
+//     return item;
+//   } catch (err) {
+//     console.log(err);
+//     throw err;
+//   }
+// };
 
 export default {
   add,
@@ -170,5 +171,5 @@ export default {
   getAllByItem,
   getAllOuterByItem,
   setItem,
-  signup,
+  // signup,
 };

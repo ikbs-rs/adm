@@ -5,7 +5,7 @@ import { decodeJWT } from '../../security/jwt/tokenJWT.js'
 const router = express.Router();
 
 router.post('/checkPermissions', async (req, res, next) => {
-  //console.log("*******checkPermissions********")
+  console.log("serviceRoute.checkPermissions=======================================****01.0**", req.body)
   return await checkPermissionsEx(req, res, next);
 }); 
 

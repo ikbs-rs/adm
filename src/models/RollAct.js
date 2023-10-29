@@ -26,16 +26,16 @@ export const getRolls = async (objName, par1, par2) => {
     if (par1 != 1 && par2 == 1) {
       switch (par1) {
         case "CREATE":
-          query = query + " and ra.cre_action = 1";
+          query = query + " and (ra.cre_action = 1 or ra.all_action = 1) ";
           break;
         case "UPDATE":
-          query = query + " and ra.upd_action = 1";
+          query = query + " and (ra.upd_action = 1 or ra.all_action = 1) ";
           break;
         case "DELETE":
-          query = query + " and ra.del_action = 1";
+          query = query + " and (ra.del_action = 1 or ra.all_action = 1) ";
           break;
         case "EXECUTE":
-          query = query + " and ra.del_action = 1";
+          query = query + " and (ra.del_action = 1 or ra.all_action = 1) ";
           break;
       }
     } else if (par1 == "1" && par2 != "1") {
@@ -47,7 +47,7 @@ export const getRolls = async (objName, par1, par2) => {
       query = query;
       params.push(par1, par2);
     }
-    console.log(query, "*********************getRolls************************", params)
+    console.log("RollAct.getRolls=======================================****03.2.1**", query, params)
     const { rows } = await db.query(query, params);
     return rows;
   } catch (error) {

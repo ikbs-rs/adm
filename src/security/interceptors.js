@@ -6,7 +6,7 @@ import roll from "./guards/roll.js"
 // funkcija za proveru ispravnosti JWT tokena za postojeci modul ADM.
 export const checkJwt = async (req, res, next) => {  
   try {
-    //console.log('checkJwt====================================')
+    console.log('interceptor.checkJwt===========================================01==')
     const jwtServer = process.env.JWT_URL;
     const token = req.headers.authorization?.replace("Bearer ", "");
     if (!jwtServer) {
@@ -16,6 +16,7 @@ export const checkJwt = async (req, res, next) => {
     } else {
       if (jwtServer === "LOCAL") {
         jwt.verify(token, jwtConfig.secret, (err, decoded) => {  
+          console.log("interceptor.checkJwt============================================****01.0**", req.userId)
           if (err) return res.status(401).json({ error: "Token invalid" });
           req.userId = decoded.userId
           req.decodeJwt = decoded
@@ -25,7 +26,7 @@ export const checkJwt = async (req, res, next) => {
         const checkJwtUrl = `${jwtServer}/checkJwt`;
         const res = await axios.post(`${checkJwtUrl}`, {}, {
           headers: { Authorization: `Bearer ${token}` },
-          timeout: 5000, // vreme za koje se očekuje odgovor od udaljenog servera (u milisekundama)
+          timeout: 5000, // vreme za koje se očekuje odgovor od udaljenog sservera (u milisekundama)
         });
         // provera statusa odgovora
         if (response.status === 200 && response.data.success) {
@@ -51,20 +52,23 @@ export const checkJwt = async (req, res, next) => {
 // Middleware funkcija za proveru prava, sa default parametrima
 export const checkPermissions = (par1 = "1", par2 = "1") => {
   return async (req, res, next) => {
-    //console.log("Check Permissions", req.userId)
+    console.log("interceptor.checkPermissions================================****02.0**", req.userId)
     try {
       // Dohvatam objekat i korisnika i prosledjujem dalje
       const objName = req.objName;
       const userId = req.userId;
       // Proveru prava korisnika dalje obavlja obicna funkcija
       if (await roll.proveraDozvola(userId, objName, par1, par2)) {
+        console.log("###OK###")
         next();
       } else {
+        console.log("###NO###")
         return res
           .status(401)
           .json({ message: "Nemate pravo pristupa ovom resursu - roll." });
       }
     } catch (error) {
+      console.log("###ERROR###")
       // u slučaju greške, vraćamo objekat sa informacijama o grešci
       return res.status(error.response?.status || 500).json({
         message: error.message || "Internal  Server Error - roll",
@@ -76,30 +80,31 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
 };
 
 export const checkPermissionsEx = async (req, res, next) => {
-  //try {
+  try {
     // Dohvatam objekat i korisnika i prosledjujem dalje
-    //console.log(req.userId, "loooooocheckPermissionsEx*-*-*-*-*-*-*-**-*-*!!!!", req.body)
+    console.log("interceptor.checkPermissionsEx=======================================*****02***", req.userId, req.body)
     const userId = req.userId;
-    const objName = req.body.objName;
+    const objName = req.body.objId;
     const par1 = req.body.par1 || 1;
     const par2 = req.body.par2 || 1;
     // Proveru prava korisnika dalje obavlja obicna funkcija
     if (await roll.proveraDozvola(userId, objName, par1, par2)) {
-      //console.log("********************89****************")
+      console.log("********************92********OK********")
       return res
         .status(200)
         .json({ allowed: true, message: `Imate prava na resurs ${objName}` });
     } else {
-      //console.log("********************94****************")
+      console.log("********************97********NO********")
       return res
         .status(401)
         .json({ message: "Nemate pravo pristupa ovom resursu - roll." });
     }
-  // } catch (error) {
-  //   // u slučaju greške, vraćamo objekat sa informacijama o grešci
-  //   return res.status(error.response?.status || 500).json({
-  //     message: error.message || "Internal  Server Error - roll",
-  //     data: error.response?.data || {},
-  //   });
-  // }
+  } catch (error) {
+    console.log("********************103********ERROR********")
+    // u slučaju greške, vraćamo objekat sa informacijama o grešci
+    return res.status(error.response?.status || 500).json({
+      message: error.message || "Internal  Server Error - roll",
+      data: error.response?.data || {},
+    });
+  }
 };

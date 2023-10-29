@@ -7,7 +7,7 @@ import { checkPermissions } from '../../security/interceptors.js'
 const router = express.Router();
 
 router.use("/", (req, res, next) => {
-  console.log("ADM abstructRoute************************", req.path)
+  //console.log("ADM abstructRoute************************", req.path)
   const urlParts = req.url.split("/");
   req.objName2 = urlParts[1];
   if (req.objName2=="services") {
@@ -16,7 +16,7 @@ router.use("/", (req, res, next) => {
     });
   } else {
     if (req.path.startsWith("/_v")) {
-      console.log("ADM _v************************", req.path)
+      //console.log("ADM _v************************", req.path)
       router.use("/_v", vRoute);
     } else if (req.path.startsWith("/_f")) {
       router.use("/_f", fRoute);
