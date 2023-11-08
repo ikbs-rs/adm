@@ -12,6 +12,7 @@ app.use(cors());
 
 dotenv.config()
 app.use((req, res, next) => { 
+  console.log("*******webDomen**********", webDomen)
   next();
 });
 const httpPort = process.env.APP_PORT || 80; // HTTP port
@@ -27,6 +28,7 @@ const credentials = { key: privateKey, cert: certificate };
 
  //Dodajte middleware za omogućavanje CORS
  app.use((req, res, next) => {
+  console.log("*******webDomen**********", webDomen)
   const allowedOrigins = [webDomen, '*.ems.local'];
   const origin = req.headers.origin;
 
