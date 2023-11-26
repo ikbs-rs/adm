@@ -6,7 +6,7 @@ import roll from "./guards/roll.js"
 // funkcija za proveru ispravnosti JWT tokena za postojeci modul ADM.
 export const checkJwt = async (req, res, next) => {  
   try {
-    console.log('interceptor.checkJwt===========================================01==')
+    console.log('00.1 interceptor.checkJwt=============================================')
     const jwtServer = process.env.JWT_URL;
     const token = req.headers.authorization?.replace("Bearer ", "");
     if (!jwtServer) {
@@ -16,10 +16,14 @@ export const checkJwt = async (req, res, next) => {
     } else {
       if (jwtServer === "LOCAL") {
         jwt.verify(token, jwtConfig.secret, (err, decoded) => {  
-          console.log("interceptor.checkJwt============================================****01.0**", req.userId)
-          if (err) return res.status(401).json({ error: "Token invalid" });
+          console.log("00.2 interceptor.checkJwt=====================LOCAL=======================", jwtConfig, "******", token, "******", decoded)
+          if (err)  {
+            console.log("00.2.1 interceptor.checkJwt=====================LOCAL======********************************", err)
+            return res.status(401).json({ error: "Token invalid" });
+          }
           req.userId = decoded.userId
           req.decodeJwt = decoded
+          console.log("00.3 interceptor.checkJwt=====================LOCAL==========ERROR 01 =============", req.decodeJwt, "******", req.userId)
           next();
         });
       } else {
@@ -42,6 +46,7 @@ export const checkJwt = async (req, res, next) => {
     }
   } catch (error) {
     // u slučaju greške, vraćamo objekat sa informacijama o grešci
+    console.log("00.4 interceptor.checkJwt=====================LOCAL==========ERROR 02 =============", error.message )
     return res.status(error.response?.status || 500).json({
       message: error.message || "Internal Server Error",
       data: error.response?.data || {},
@@ -51,6 +56,7 @@ export const checkJwt = async (req, res, next) => {
 
 // Middleware funkcija za proveru prava, sa default parametrima
 export const checkPermissions = (par1 = "1", par2 = "1") => {
+  console.log("22.0 interceptor.checkPermissions================================")
   return async (req, res, next) => {
     console.log("interceptor.checkPermissions================================****02.0**", req.userId)
     try {
@@ -82,25 +88,25 @@ export const checkPermissions = (par1 = "1", par2 = "1") => {
 export const checkPermissionsEx = async (req, res, next) => {
   try {
     // Dohvatam objekat i korisnika i prosledjujem dalje
-    console.log("interceptor.checkPermissionsEx=======================================*****02***", req.userId, req.body)
+    console.log("00.1 interceptor.checkPermissionsEx=======================================*****02***", req.userId, req.body)
     const userId = req.userId;
     const objName = req.body.objId;
     const par1 = req.body.par1 || 1;
     const par2 = req.body.par2 || 1;
     // Proveru prava korisnika dalje obavlja obicna funkcija
     if (await roll.proveraDozvola(userId, objName, par1, par2)) {
-      console.log("********************92********OK********")
+      console.log("00.2 interceptor.checkPermissionsEx****************************OK********")
       return res
         .status(200)
         .json({ allowed: true, message: `Imate prava na resurs ${objName}` });
     } else {
-      console.log("********************97********NO********")
+      console.log("00.3 interceptor.checkPermissionsEx****************************NO********")
       return res
         .status(401)
         .json({ message: "Nemate pravo pristupa ovom resursu - roll." });
     }
   } catch (error) {
-    console.log("********************103********ERROR********")
+    console.log("00.4 ERROR interceptor.checkPermissionsEx****************************ERROR********")
     // u slučaju greške, vraćamo objekat sa informacijama o grešci
     return res.status(error.response?.status || 500).json({
       message: error.message || "Internal  Server Error - roll",

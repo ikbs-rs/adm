@@ -172,7 +172,7 @@ const findAllOuterByItem = async (objName, lang, item, itemValue, outer, outerKe
             ) c
         on a.${outerKey} = c.oid
         where ${item} = ${value}`;
-console.log(sqlString, "********************************");
+console.log(sqlString, "*****************findAllOuterByItem***************");
   const result = await db.query(sqlString);
   const rows = result.rows;
   if (Array.isArray(rows)) {
@@ -212,7 +212,7 @@ const findAllOuter1ByItem = async (objName, lang, item, itemValue, outer, outerK
         ) d
         on a.${outerKey1} = d.o1id
         where ${item} = ${value}`;
-console.log(sqlString, "********************************");
+console.log(sqlString, "***************findAllOuter1ByItem*****************");
   const result = await db.query(sqlString);
   const rows = result.rows;
   if (Array.isArray(rows)) {

@@ -56,11 +56,11 @@ const httpsServer = https.createServer(credentials, app);
 
 
 httpServer.listen(httpPort, () => {
-  console.log(`HTTP Server je pokrenut na adresi ${httpPort}`);
+  console.log(`HTTP Server je pokrenut na adresi ${webDomen}  ${rootDir} : ${httpPort}`);
 });
 
 httpsServer.listen(httpsPort, () => {
-  console.log(`HTTPS Server je pokrenut na adresi ${httpsPort}`);
+  console.log(`HTTPS Server je pokrenut na adresi ${webDomen}  ${rootDir} : ${httpsPort}`);
 });
 
 // const appPort = process.env.APP_PORT 

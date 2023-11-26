@@ -51,6 +51,7 @@ const getToken = async (userId, userName) => {
     username: userName,
     iat: Date.now(),
   };
+  console.log("*11.000******************getToken*********************", payload, "***", jwtConfig)
   const token = jwt.sign(payload, jwtConfig.secret, {
     expiresIn: jwtConfig.expiresIn,
   });
