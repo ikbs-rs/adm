@@ -43,7 +43,7 @@ const signup = async (objData, lang) => {
         throw new Error(`Korisnik sa nalogom ${objData.username} postoji!`);
       }
       // Add the user
-      console.log("**2.0************************userHelper.Signup**********************************", objData.username)
+      console.log("**2************************userHelper.Signup**********************************", objData.username)
       const result = await abstructHelper.signup(objName, objData, lang);
       return result;
     } catch (err) {
@@ -53,12 +53,12 @@ const signup = async (objData, lang) => {
 
 const signin = async (objData) => {
     // try {
-      console.log("*0.0********************Helper*****signin**********************************", objData)
+      console.log("*********************0*****signinH**********************************", objData.username)
         const objName = "adm_user";
         const userId = await abstructHelper.getIdByItem(objName, "mail", objData.username);
-        console.log("*0.1********************Helper*****signin**********************************", userId, "===", objData.username)
+        console.log("*********************1*****signinH**********************************", userId)
         const result = await getToken(userId.id, objData.username);
-        console.log(userId, "*0.2********************Helper*****signin**********************************", result)
+        console.log(userId, "********************2******signinH**********************************", result)
         return result;
     // } catch (err) {
     //     throw new Error(`Greška pri logovanju korisnika uH_singin: ${err.message}`);
