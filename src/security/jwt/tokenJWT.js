@@ -45,13 +45,15 @@ const verifyJWT = async (req, res, next) => {
   });
 };
 
-const getToken = async (userId, userName) => {
+const getToken = async (userId, userName, admin, channels) => {
   const payload = {
     userId: userId,
+    id: userId,
+    admin: admin,
     username: userName,
     iat: Date.now(),
+    channels: channels,
   };
-  console.log("*11.000******************getToken*********************", payload, "***", jwtConfig)
   const token = jwt.sign(payload, jwtConfig.secret, {
     expiresIn: jwtConfig.expiresIn,
   });
