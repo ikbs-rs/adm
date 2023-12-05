@@ -23,6 +23,7 @@ const findUserChanel = async (userId) => {
 };
 
 const signup = async (objData, lang) => {
+<<<<<<< HEAD
   try {
     console.log("**0******************userHelper.Signup************************", objData)
     const objName = "adm_user";
@@ -36,8 +37,41 @@ const signup = async (objData, lang) => {
     if (userMail) {
       console.log("**1.1******************userHelper.Signup************************", userMail)
       throw new Error(`Korisnik sa mejlom ${objData.mail} postoji!`);
+=======
+    try {
+      console.log("**0******************userHelper.Signup************************", objData)
+      const objName = "adm_user";
+      // Provera da li postoji mail
+      const userMail = await abstructHelper.getIdByItem(
+        objName,
+        "mail",
+        objData.mail
+      );
+      console.log("**1******************userHelper.Signup************************", userMail)
+      if (userMail) {
+        console.log("**1.1******************userHelper.Signup************************", userMail)
+        throw new Error(`Korisnik sa mejlom ${objData.mail} postoji!`);
+      }
+
+      // Provera da li postoji username
+      const userId = await abstructHelper.getIdByItem(
+        objName,
+        "username",
+        objData.username
+      );
+      if (userId) {
+        throw new Error(`Korisnik sa nalogom ${objData.username} postoji!`);
+      }
+      // Add the user
+      console.log("**2************************userHelper.Signup**********************************", objData.username)
+      const result = await abstructHelper.signup(objName, objData, lang);
+      return result;
+    } catch (err) {
+      throw new Error(`Greška pri registraciji korisnika uH_singup: ${err.message}`);
+>>>>>>> 660dc3afd468931c33c33613c049c4490791e0c7
     }
 
+<<<<<<< HEAD
     // Provera da li postoji username
     const userId = await abstructHelper.getIdByItem(
       objName,
@@ -54,6 +88,20 @@ const signup = async (objData, lang) => {
   } catch (err) {
     throw new Error(`Greška pri registraciji korisnika uH_singup: ${err.message}`);
   }
+=======
+const signin = async (objData) => {
+    // try {
+      console.log("*********************0*****signinH**********************************", objData.username)
+        const objName = "adm_user";
+        const userId = await abstructHelper.getIdByItem(objName, "mail", objData.username);
+        console.log("*********************1*****signinH**********************************", userId)
+        const result = await getToken(userId.id, objData.username);
+        console.log(userId, "********************2******signinH**********************************", result)
+        return result;
+    // } catch (err) {
+    //     throw new Error(`Greška pri logovanju korisnika uH_singin: ${err.message}`);
+    // }
+>>>>>>> 660dc3afd468931c33c33613c049c4490791e0c7
 };
 
 const signin = async (objData) => {
