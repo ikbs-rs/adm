@@ -22,7 +22,7 @@ export const getRolls = async (objName, par1, par2) => {
     // } 
 
     let query = 
-      "SELECT ra.roll FROM adm_rollact ra, adm_action a WHERE ra.action = a.id and a.code=$1";
+      `SELECT ra.roll FROM adm_rollact ra, adm_action a WHERE ra.action = a.id and a.code='${params[0]}' `;
     if (par1 != 1 && par2 == 1) {
       switch (par1) {
         case "CREATE":
@@ -47,9 +47,11 @@ export const getRolls = async (objName, par1, par2) => {
       query = query;
       params.push(par1, par2);
     }
-    console.log("RollAct.getRolls=======================================****03.2.1**", query, params)
-    const { rows } = await db.query(query, params);
-    return rows;
+    console.log("RollAct.getRolls 00 =======================================****03.2.1**", query, params[0])
+    // const aaaa = await db.query(query, params);
+    let result = await db.query(query);
+    console.log("RollAct.getRolls 01 =======================================****03.2.2**",  result)
+    return result.rows;
   } catch (error) {
     throw new Error(
       `Greška pri dohvatanju sloga iz baze (rollAct): ${error.message}`
