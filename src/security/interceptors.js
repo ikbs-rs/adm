@@ -15,6 +15,7 @@ export const checkJwt = async (req, res, next) => {
       );
     } else {
       if (jwtServer === "LOCAL") {
+        console.log(`**secret*** ${jwtConfig.secret} ****************************************jwtServer**`)
         jwt.verify(token, jwtConfig.secret, (err, decoded) => {  
           console.log("00.2 interceptor.checkJwt=====================LOCAL=======================", jwtConfig, "******", token, "******", decoded)
           if (err)  {
