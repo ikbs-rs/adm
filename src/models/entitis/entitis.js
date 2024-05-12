@@ -59,7 +59,8 @@ const entitiesInfo =
         "code": "string",
         "text": "string",
         "strukturna": "string",
-        "valid": "number"
+        "valid": "number",
+        "xparam": "string"
       }
     },
     "adm_rollact": {
