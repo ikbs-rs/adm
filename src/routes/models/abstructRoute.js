@@ -16,7 +16,6 @@ router.use("/", (req, res, next) => {
     });
   } else {
     if (req.path.startsWith("/_v")) {
-      //console.log("ADM _v************************", req.path)
       router.use("/_v", vRoute);
     } else if (req.path.startsWith("/_f")) {
       router.use("/_f", fRoute);
