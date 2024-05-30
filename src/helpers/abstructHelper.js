@@ -143,7 +143,7 @@ const setItem = async (objName, item, items) => {
 
 //************************** */
 
-const signup = async (objName, objData, lang) => {
+const signup = async (objName, objData, countryId, lang) => {
   try {
     //console.log("**0**********************abstructHelper.signup****************************")
     objData.id = await uniqueId();
@@ -169,6 +169,8 @@ const signup = async (objName, objData, lang) => {
     objData2.code = objData.username
     objData2.text = `${objData.firstname} ${objData.lastname}`
     objData2.tp = 2 // 1 - Pravno lice, 2 - Fizicko lice ovo ubaciti u DB_PARAMETRE
+    objData2.countryid = countryId
+    objData2.email = objData.mail
     objData2.begda =  DateFunction.currDate()
     objData2.endda = "99991231"
     console.log("**1.1**********************abstructHelper.signup****************************")

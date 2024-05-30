@@ -44,12 +44,23 @@ const signup = async (objData, lang) => {
       "username",
       objData.username
     );
+    console.log("**2******************userHelper.Signup************************", userId)    
     if (userId) {
       throw new Error(`Korisnik sa nalogom ${objData.username} postoji!`);
     }
+    console.log("**3******************userHelper.Signup*********************** g g g g *") 
+    const countryId = await abstructHelper.getIdByItem(
+      'cmn_terr',
+      'code',
+      'RS'
+    );   
+    let cId =null
+    if  (countryId) {
+      cId = countryId?.id;
+    }
     // Add the user
-    console.log("**2.0************************userHelper.Signup**********************************", objData.username)
-    const result = await abstructHelper.signup(objName, objData, lang);
+    console.log(countryId, "**2.0************************userHelper.Signup********************************* BMV *", objData)
+    const result = await abstructHelper.signup(objName, objData, countryId.id, lang);
     return result;
   } catch (err) {
     throw new Error(`Greška pri registraciji korisnika uH_singup: ${err.message}`);

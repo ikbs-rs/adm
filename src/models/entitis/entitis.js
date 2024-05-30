@@ -221,6 +221,22 @@ const entitiesInfo =
       "idnum": "string",
       "pdvnum": "string",
       "begda": "string",
+      "endda": "string",
+      "docid": "string",
+      "country": "string",
+      "email": "string",
+      "countryid": "number"      
+      }
+    },
+    "cmn_terr": {
+      "attributes": {
+      "id": "number",
+      "site": "number",
+      "code": "string",
+      "text": "string",
+      "tp": "number",
+      "postcode": "string",
+      "begda": "string",
       "endda": "string"
       }
     },

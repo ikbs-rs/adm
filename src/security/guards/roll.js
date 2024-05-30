@@ -29,7 +29,7 @@ const proveraDozvola = async (userId, objName, par1, par2, callback) => {
       if (OK) { 
         // Ako postoji rola onda se proverava da li je data trenutnom korisniku
         const userPermission = await checkUserPermissions(userId, role);
-        console.log("roll.proveraDozvola=======================================****03.4**", userPermission)
+        console.log("roll.proveraDozvola=======================================****03.4**", userPermission, role)
         if (userPermission) {
           // if (callback) {
           //   callback(null, true);

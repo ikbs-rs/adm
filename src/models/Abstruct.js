@@ -42,7 +42,7 @@ const add2 = async (sqlQuery1, sqlQuery2) => {
 };
 
 const add4 = async (sqlQuery1, sqlQuery2, sqlQuery3, sqlQuery4) => {
-  console.log("************************Abstract.add3****************************")
+  console.log(sqlQuery1, "************************Abstract.add3****************************", sqlQuery2, sqlQuery3, sqlQuery4)
   try {
     await db.query("BEGIN");
     const result1 = await db.query(sqlQuery1);
@@ -131,9 +131,13 @@ const findItem = async (objName, item, id) => {
 
 //find id by Item function
 const findIdbyItem = async (objName, item, itemValue) => {
+  console.log("00", objName, item, itemValue)
   const attributeType = entities.entitiesInfo[objName].attributes[item];
+  console.log("01")
   const value = attributeType === 'string' ? `'${itemValue}'` : itemValue;
+  console.log("02")
   const sqlString = `SELECT id FROM ${objName} WHERE ${item} = ${value}`;
+  console.log(sqlString, "## BMV ############################################################################## BMV ##")
   const {rows} = await db.query(sqlString);
   return rows[0];
 };
