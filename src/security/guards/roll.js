@@ -1,4 +1,4 @@
-import rollAct from "../../helpers/rollActHelper.js";
+import rollAct from "../../helpers/RollActHelper.js";
 import { checkUserPermissions } from "../../helpers/userpermissHelper.js";
 import abstructHelper from "../../helpers/abstructHelper.js";
 
