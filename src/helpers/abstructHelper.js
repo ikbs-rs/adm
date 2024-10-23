@@ -223,7 +223,7 @@ const getLista = async (objName, stm, objId, lang) => {
           result = await abstractModel.getAdmUserEventDDV(objName, lang);
           break;        
       default:
-        console.error("Pogresan naziv za view");
+        console.error(`Pogresan naziv za view 00 ${stm}`);
     }
     return result;
   } catch (err) {
