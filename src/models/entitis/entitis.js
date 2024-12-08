@@ -6,7 +6,8 @@ const entitiesInfo =
         "site": "number",
         "code": "string",
         "text": "string",
-        "valid": "number"
+        "valid": "number",
+        "maxticket01": "number"
       }
     },
     "adm_blacklist_token": {
