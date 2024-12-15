@@ -5,13 +5,13 @@ const saltRounds = 10;
 
 //# add function
 const add = async (sqlQuery) => {
-  console.log("************************Abstract.add****************************")
+  // console.log("************************Abstract.add****************************")
   const result = await db.query(sqlQuery);
   return result.rowCount;
 };
 
 const add2 = async (sqlQuery1, sqlQuery2) => {
-  console.log("************************Abstract.add2****************************")
+  // console.log("************************Abstract.add2****************************")
   try {
     await db.query("BEGIN");
     const result1 = await db.query(sqlQuery1);
@@ -42,7 +42,7 @@ const add2 = async (sqlQuery1, sqlQuery2) => {
 };
 
 const add4 = async (sqlQuery1, sqlQuery2, sqlQuery3, sqlQuery4) => {
-  console.log(sqlQuery1, "************************Abstract.add3****************************", sqlQuery2, sqlQuery3, sqlQuery4)
+  // console.log(sqlQuery1, "************************Abstract.add3****************************", sqlQuery2, sqlQuery3, sqlQuery4)
   try {
     await db.query("BEGIN");
     const result1 = await db.query(sqlQuery1);
@@ -124,20 +124,20 @@ const remove = async (objName, id) => {
 //# find Item by id function
 const findItem = async (objName, item, id) => {
   const sqlString = `SELECT ${item} FROM ${objName} WHERE id = ${id}`;
-  console.log("Abstruct.findItem=============================================03.1.1**", sqlString)
+  // console.log("Abstruct.findItem=============================================03.1.1**", sqlString)
   const result = await db.query(sqlString);
   return result.rows[0];
 };
 
 //find id by Item function
 const findIdbyItem = async (objName, item, itemValue) => {
-  console.log("00", objName, item, itemValue)
+  // console.log("00", objName, item, itemValue)
   const attributeType = entities.entitiesInfo[objName].attributes[item];
-  console.log("01")
+  // console.log("01")
   const value = attributeType === 'string' ? `'${itemValue}'` : itemValue;
-  console.log("02")
+  // console.log("02")
   const sqlString = `SELECT id FROM ${objName} WHERE ${item} = ${value}`;
-  console.log(sqlString, "## BMV ############################################################################## BMV ##")
+  // console.log(sqlString, "## BMV ############################################################################## BMV ##")
   const {rows} = await db.query(sqlString);
   return rows[0];
 };
@@ -176,7 +176,7 @@ const findAllOuterByItem = async (objName, lang, item, itemValue, outer, outerKe
             ) c
         on a.${outerKey} = c.oid
         where ${item} = ${value}`;
-console.log(sqlString, "*****************findAllOuterByItem***************");
+// console.log(sqlString, "*****************findAllOuterByItem***************");
   const result = await db.query(sqlString);
   const rows = result.rows;
   if (Array.isArray(rows)) {
@@ -216,7 +216,7 @@ const findAllOuter1ByItem = async (objName, lang, item, itemValue, outer, outerK
         ) d
         on a.${outerKey1} = d.o1id
         where ${item} = ${value}`;
-console.log(sqlString, "***************findAllOuter1ByItem*****************");
+// console.log(sqlString, "***************findAllOuter1ByItem*****************");
   const result = await db.query(sqlString);
   const rows = result.rows;
   if (Array.isArray(rows)) {
@@ -243,7 +243,7 @@ const getAdmParV = async (objName, objId, lang) => {
   where	aa.usr = ${objId}     
   and 	b.lang = '${lang||'en'}'
   and 	aa.par = b.id`      
- console.log(sqlRecenica, "****************************/////////")
+ // console.log(sqlRecenica, "****************************/////////")
   let result = await db.query(sqlRecenica);
   let rows = result.rows;
   if (Array.isArray(rows)) {
@@ -261,7 +261,7 @@ const getAdmUserEventDDV = async (objName, objId, lang) => {
   select id, username code, firstname||' '||coalesce(lastname, '.') text, firstname||' '||coalesce(lastname, '.') textx 
   from adm_user u
   `      
- console.log(sqlRecenica, "****************************/////////")
+ // console.log(sqlRecenica, "****************************/////////")
   let result = await db.query(sqlRecenica);
   let rows = result.rows;
   if (Array.isArray(rows)) {

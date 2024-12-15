@@ -6,7 +6,7 @@ const saltRounds = 10;
 
 const getLista = async (objName, stm, objId, id, lang) => {
   try {
-    console.log("Dosao u Helper V ", stm)
+    // console.log("Dosao u Helper V ", stm)
     let result = {};
     switch (stm) {
       case "adm_paruser_v":

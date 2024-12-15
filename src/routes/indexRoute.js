@@ -36,19 +36,19 @@ router.use(async (req, res, next) => {
     return next();
   }
   try {
-    console.log("00 ///////////////////////Prvo token pa sve ostalo//////////////////", req.url, req.objName, req.body)
+    // console.log("00 ///////////////////////Prvo token pa sve ostalo//////////////////", req.url, req.objName, req.body)
     await checkJwt(req, res, next);
-    console.log("01 /////////////////////// Prosao proveru tokena  //////////////////")
+    // console.log("01 /////////////////////// Prosao proveru tokena  //////////////////")
     // Ovde možete nastaviti sa izvršavanjem koda nakon što je checkJwt završen
   } catch (error) {
     // Obrada grešaka koje se desila u checkJwt
-    console.log("01.1 /////////////////////// Greska proveru tokena  //////////////////")
+    // console.log("01.1 /////////////////////// Greska proveru tokena  //////////////////")
     res.status(401).json({ error: "Unauthorized" });
   }
 });
 
 router.use((req, res, next) => {
-  console.log("02 /////////////////////// Otisao ka ruterima  //////////////////")
+  // console.log("02 /////////////////////// Otisao ka ruterima  //////////////////")
   next();
 });
 
@@ -86,7 +86,7 @@ router.use((req, res, next) => {
   router.use("/adm/services", servicesRoute);
 
 router.use("/", (req, res, next) => {
-  console.log("03 /////////////////////// Greska!!!  //////////////////")
+  // console.log("03 /////////////////////// Greska!!!  //////////////////")
   next();
   return res.status(403).send({ error: "Forbidden!! " + req.url });
 });

@@ -11,7 +11,7 @@ router.use("/", (req, res, next) => {
     const urlParts = req.url.split("/");
     req.objName2 = urlParts[1];
     if (req.path.startsWith("/_v")) {
-        console.log("ADM _v************************", req.path)
+        // console.log("ADM _v************************", req.path)
         router.use("/_v", vRoute);
     } else {
         router.post("/up", userController.signup);
