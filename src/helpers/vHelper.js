@@ -12,6 +12,9 @@ const getLista = async (objName, stm, objId, id, lang) => {
       case "adm_paruser_v":
         result = await abstractModel.getAdmParV(objName, objId, lang);
         break;
+      case "adm_useratts_v":
+        result = await abstractModel.getAdmUserattsV(objName, objId, lang);
+        break;
       case "adm_userchannel_v":
         result = await vModel.getUserChannelV(objName, objId, lang);
         break;

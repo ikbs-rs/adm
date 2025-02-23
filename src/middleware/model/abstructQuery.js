@@ -1,10 +1,12 @@
  import entities from "../../models/entitis/entitis.js";
  
  const getInsertQuery = async (objName, objData) => {
-  console.log("**0**********************getInsertQuery****************************")
+  
   const insertFields = [];
   const insertValues = [];
+  console.log(objName, "**-1**********************getInsertQuery****************************")
   const entity = entities.entitiesInfo[objName].attributes
+  console.log(objName, "**0**********************getInsertQuery****************************", entity)
   for (const key in entity) {
     const value = objData[key]
     if (value !== null && value !== '' && value !== undefined) {

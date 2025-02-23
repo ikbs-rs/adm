@@ -11,7 +11,7 @@ const add = async (objName, objData) => {
   try {
 
     if (!objData.id || objData.id !== null) {
-        objData.id = await uniqueId();
+      objData.id = await uniqueId();
     }
     // Mozda mi ovo ne treba jer dolazi sa fronta !!!
     if (objName === "adm_user") {
@@ -155,7 +155,7 @@ const signup = async (objName, objData, countryId, lang) => {
     };
     //const user = await add(objName, objData);
     //const user = await signup(objName, objData);
-// Izmene za automatski unos sloga u cmn_par
+    // Izmene za automatski unos sloga u cmn_par
     // Mozda mi ovo ne treba jer dolazi sa fronta !!!
     const hashedPassword = await bcrypt.hash(objData.password, saltRounds);
     objData.password = hashedPassword;
@@ -171,7 +171,7 @@ const signup = async (objName, objData, countryId, lang) => {
     objData2.tp = 2 // 1 - Pravno lice, 2 - Fizicko lice ovo ubaciti u DB_PARAMETRE
     objData2.countryid = countryId
     objData2.email = objData.mail
-    objData2.begda =  DateFunction.currDate()
+    objData2.begda = DateFunction.currDate()
     objData2.endda = "99991231"
     console.log("**1.1**********************abstructHelper.signup****************************")
     const sqlQuery2 = await abstructQuery.getInsertQuery(objName2, objData2);
@@ -184,27 +184,27 @@ const signup = async (objName, objData, countryId, lang) => {
     objData3.site = null
     objData3.par = objData2.id
     objData3.usr = objData.id
-    objData3.begda =  DateFunction.currDate()
+    objData3.begda = DateFunction.currDate()
     objData3.endda = "99991231"
 
     const sqlQuery3 = await abstructQuery.getInsertQuery(objName3, objData3);
     console.log("**3**********************abstructHelper.signup****************************")
 
-    let objName4 = `${objName2}x`    
+    let objName4 = `${objName2}x`
     let objData4 = {}
     objData4.id = await uniqueId();
     objData4.site = null
     objData4.tableid = objData2.id
-    objData4.lang = lang ||'en'
+    objData4.lang = lang || 'en'
     objData4.grammcase = 1
     objData4.text = objData2.text
-    
+
     const sqlQuery4 = await abstructQuery.getInsertQuery(objName4, objData4);
     console.log("**4**********************abstructHelper.signup****************************")
 
     const result = await abstractModel.add4(sqlQuery, sqlQuery2, sqlQuery3, sqlQuery4);
 
-// Izmene za automatski unos sloga u cmn_par
+    // Izmene za automatski unos sloga u cmn_par
     return item;
   } catch (err) {
     console.log(err);
@@ -219,9 +219,12 @@ const getLista = async (objName, stm, objId, lang) => {
       case "adm_paruser_v":
         result = await abstractModel.getAdmParV(objName, objId, lang);
         break;
-        case "adm_usereventdd_v":
-          result = await abstractModel.getAdmUserEventDDV(objName, lang);
-          break;        
+      case "adm_useratts_v":
+        result = await abstractModel.getAdmUserattsV(objName, objId, lang);
+        break;
+      case "adm_usereventdd_v":
+        result = await abstractModel.getAdmUserEventDDV(objName, lang);
+        break;
       default:
         console.error(`Pogresan naziv za view 00 ${stm}`);
     }

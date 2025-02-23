@@ -138,6 +138,16 @@ const entitiesInfo =
         "valid": "number"
       }
     },
+    "adm_useratt": {
+      "attributes": {
+        "id": "number",
+        "site": "number",
+        "code": "string",
+        "text": "string",
+        "tp": "string",
+        "valid": "number"
+      }
+    },
     "adm_userlink": {
       "attributes": {
         "id": "number",
@@ -203,6 +213,29 @@ const entitiesInfo =
         "lang": "string",
         "grammcase": "number",
         "text": "string"
+      }
+    },
+    "adm_userattx": {
+      "attributes": {
+        "id": "number",
+        "site": "number",
+        "tableid": "number",
+        "lang": "string",
+        "grammcase": "number",
+        "text": "string"
+      }
+    },
+    "adm_useratts": {
+      "attributes": {
+      "id": "number",
+      "site": "number",
+      "usr": "number",
+      "att": "number",
+      "text": "string",
+      "vrednost": "string",
+      "zzcode": "string",
+      "begda": "string",
+      "endda": "string"
       }
     },
     "cmn_par": {

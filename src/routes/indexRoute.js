@@ -55,6 +55,7 @@ router.use((req, res, next) => {
   router.use("/adm/x/action", checkPermissions(), abstructX);
   router.use("/adm/x/roll", checkPermissions(), abstructX);
   router.use("/adm/x/usergrp", checkPermissions(), abstructX);
+  router.use("/adm/x/useratt", checkPermissions(), abstructX);
   //router.use(/^\/adm\/.*_v.*$/, checkPermissions(), abstruct);
 
   router.use("/adm/services/sign", user);
@@ -74,6 +75,7 @@ router.use((req, res, next) => {
   router.use("/adm/user_v", checkPermissions(), abstruct);
   router.use("/adm/userf", checkPermissions(), abstruct);
   router.use("/adm/usergrp", checkPermissions(), abstruct);
+  router.use("/adm/useratts", checkPermissions(), abstruct);
   router.use("/adm/userlink", checkPermissions(), abstruct);
   router.use("/adm/userlinkpremiss", checkPermissions(), abstruct);
   router.use("/adm/userloc", checkPermissions(), abstruct);

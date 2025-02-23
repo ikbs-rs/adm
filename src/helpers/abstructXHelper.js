@@ -8,6 +8,7 @@ const saltRounds = 10
 
 const add = async (objName, objData, lang) => {
   try {
+    
     let objName1 = objName
     let objData1 = objData
     let objName2 = `${objName}x`    
@@ -31,6 +32,7 @@ const add = async (objName, objData, lang) => {
     }
     const sqlQuery1 = await abstructQuery.getInsertQuery(objName1, objData1);
     const sqlQuery2 = await abstructQuery.getInsertQuery(objName2, objData2);
+    console.log(sqlQuery1, "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH", sqlQuery2)
     const result = await abstractModel.add(sqlQuery1, sqlQuery2);
     return objData1.id; //result;
   } catch (err) {
